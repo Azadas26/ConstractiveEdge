@@ -4,6 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var hbs = require('express-handlebars')
+var db = require('./connection/connect')
+var fileUpload = require('express-fileupload')
+var session = require('express-session')
 
 var userRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
@@ -21,10 +24,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(fileUpload())
+app.use(session({secret:"key",cookie:{maxAge:600000}}))
 
 app.use('/', userRouter);
 app.use('/admin', adminRouter);
 app.use('/workers', workerRouter);
+
+db.connection().then((data)=>
+{
+  console.log(data);
+}).catch((err)=>
+{
+  console.log(err);
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
