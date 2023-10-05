@@ -1,0 +1,39 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table text-center">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Worker Name</th>
+                        <th scope="col">Email Address</th>
+                        <th scope="col">Phone Number</th>
+                        <th scope="col">Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each info}}
+                    <tr>
+                        <td class="pt-5">{{@index}}</td>
+                        <td class="pt-5">{{this.name}}</td>
+                        <td class="pt-5">{{this.email}}</td>
+                        <td class="pt-5">{{this.ph}}</td>
+                        <td>
+                            <form action="/admin/accept" method="post" enctype="multipart/form-data">
+                                <input type="text" name="name" value="{{this.name}}" style="display: none;">
+                                <input type="email" name="email" value="{{this.email}}" style="display: none;">
+                                <input type="number" name="ph" value="{{this.ph}}" style="display: none;">
+                                <input type="text" name="wkid" value="{{this._id}}" style="display: none;">
+                                <input type="password" name="password" value="{{this.password}}" style="display: none;">
+                                <input type="submit" class="btn btn-success m-2" value="Accept">
+                            </form>
+                            <a href="/admin/rejaccept?id={{this._id}}" class="btn btn-danger m-2"
+                                onclick="return confirm('Are your shure to remove this ?')">Reject</a>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

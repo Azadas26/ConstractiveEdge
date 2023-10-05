@@ -6,31 +6,29 @@ var consts = require('../connection/constants')
 
 module.exports =
 {
-    Do_Signup_By_Users: (info) => {
+    Do_Signup_By_WORKERUsers: (info) => {
         return new promise(async (resolve, reject) => {
             info.password = await bcrypt.hash(info.password, 10)
-            db.get().collection(consts.userbase).insertOne(info).then((data) => {
-                resolve(data.ops[0]._id)
+            db.get().collection(consts.workers_temp).insertOne(info).then((data) => {
+                resolve(data)
             })
         })
     },
-    Do_Login_By_The_USer: (info) => {
+    Do_Login_By_The_Workers: (info) => {
         return new promise(async (resolve, reject) => {
             await db.get().collection(consts.workers_base).findOne({ email: info.email }).then(async (data) => {
-                var state = 
+                var state =
                 {
-                    user : data,
-                    state : true
+                    user: data,
+                    state: true
                 }
                 if (data) {
                     await bcrypt.compare(info.password, data.password).then((res) => {
-                        if(res)
-                        {
+                        if (res) {
                             resolve(state)
                         }
-                        else
-                        {
-                            resolve({state :false})
+                        else {
+                            resolve({ state: false })
                         }
                     })
                 }
