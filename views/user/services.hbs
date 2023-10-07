@@ -8,19 +8,34 @@
                             class="p-1">Skilled
                             Workers Near
                             You <br></span> Has Never Been This Easier.</b></h1>
-                <form>
+                <form action="/services" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="exampleInputEmail1"><b>Select Skill</b></label> <br>
-                        <select id="cars" name="cars" style="width: 100%; height: 35px;">
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="fiat">Fiat</option>
-                            <option value="audi">Audi</option>
+                        <select id="cars" name="wrktype" style="width: 100%; height: 35px;border-radius: 12px;">
+                            <option value="electrition">Electrician</option>
+                            <option value="plumber">Plumber</option>
+                            <option value="carpenter">Carpenter</option>
+                            <option value="civileng">civil engineer</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1"><b>Enter Place</b></label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="District">
+                        <select id="district" name="district" style="width: 100%; height: 35px; border: 0; border-radius: 12px;">
+                            <option value="alappuzha">Alappuzha</option>
+                            <option value="ernakulam">Ernakulam</option>
+                            <option value="idukki">Idukki</option>
+                            <option value="kannur">Kannur</option>
+                            <option value="kasaragod">Kasaragod</option>
+                            <option value="kollam">Kollam</option>
+                            <option value="kottayam">Kottayam</option>
+                            <option value="kozhikode">Kozhikode</option>
+                            <option value="malappuram">Malappuram</option>
+                            <option value="palakkad">Palakkad</option>
+                            <option value="pathanamthitta">Pathanamthitta</option>
+                            <option value="thiruvananthapuram">Thiruvananthapuram</option>
+                            <option value="thrissur">Thrissur</option>
+                            <option value="wayanad">Wayanad</option>
+                        </select>
                     </div>
 
                     <button type="submit" style="width: 100%;" class="btn btn-dark">Submit</button>

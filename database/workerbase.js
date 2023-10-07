@@ -10,7 +10,7 @@ module.exports =
         return new promise(async (resolve, reject) => {
             info.password = await bcrypt.hash(info.password, 10)
             db.get().collection(consts.workers_temp).insertOne(info).then((data) => {
-                resolve(data)
+                resolve(data.ops[0]._id)
             })
         })
     },
@@ -36,6 +36,21 @@ module.exports =
                     resolve({ state: false })
                 }
             })
+        })
+    },
+    Get_Request_from_users : (id)=>
+    {
+        return new promise(async(resolve,reject)=>
+        {
+            var list = await db.get().collection(consts.request_base).aggregate([
+                {
+                    $match :
+                    {
+                        workersId:objectId(id)
+                    }
+                }
+            ]).toArray()
+            console.log(list);
         })
     }
 }

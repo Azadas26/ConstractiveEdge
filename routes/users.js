@@ -11,6 +11,7 @@ var verfylogin = (req, res, next) => {
     res.redirect('/login')
   }
 }
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
   if (req.session.user) {
@@ -60,6 +61,44 @@ router.get('/logout', (req, res) => {
 })
 router.get('/services', verfylogin, (req, res) => {
   res.render('./user/services', { user: true, fuser: req.session.user })
+})
+router.post('/services', verfylogin, (req, res) => {
+  userdb.FInd_Worker_By_THEUser(req.body).then((wks) => {
+    res.render('./user/workers-list', { user: true, wks, fuser: req.session.user })
+  })
+})
+router.get('/morewkinfo', (req, res) => {
+  userdb.Individual_Worker_Info(req.query.id).then((info) => {
+    userdb.Check_Wether_the_User_already_requestedORNot(req.session.user._id, req.query.id).then((infos)=>
+   {
+      if (infos.msg) {
+
+        res.render('./user/worker-page', { user: true, fuser: req.session.user, info, msg:infos.msg })
+      }
+      else {
+        res.render('./user/worker-page', { user: true, fuser: req.session.user, info })
+      }
+   })
+  })
+})
+router.get('/request', (req, res) => {
+  console.log(req.query);
+  userdb.User_Send_request_TO_WorKEr(req.session.user._id, req.query.id,req.query.type).then((info) => { 
+    res.redirect(`/morewkinfo?id=${info.wkid}`)
+  })
+})
+router.get('/requests', verfylogin,(req, res) => {
+  userdb.Get_List_OF_user_Requests(req.session.user._id).then((list)=>
+  {
+    res.render('./user/request-list', { user: true, fuser: req.session.user,list})
+  })
+})
+router.get('/removereq',verfylogin,(req,res)=>
+{
+  userdb.Remove_WorkersUser_Request_By_user(req.session.user._id,req.query.wkid).then((data)=>
+  {
+    res.redirect('/requests')
+  })
 })
 
 module.exports = router;

@@ -1,0 +1,11 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            {{#if msg}}
+            <h1>{{msg}}</h1>
+            {{else}}
+            <a href="/request?id={{info.wkid}}&type={{info.wrktype}}" class="btn btn-success mt-5 pt-5">Request</a>
+            {{/if}}
+        </div>
+    </div>
+</div>
