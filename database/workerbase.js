@@ -38,19 +38,81 @@ module.exports =
             })
         })
     },
-    Get_Request_from_users : (id)=>
-    {
-        return new promise(async(resolve,reject)=>
-        {
+    Get_Request_from_users: (id) => {
+        return new promise(async (resolve, reject) => {
             var list = await db.get().collection(consts.request_base).aggregate([
                 {
-                    $match :
+                    $match:
                     {
-                        workersId:objectId(id)
+                        workersId: objectId(id)
+                    }
+                },
+                {
+                    $lookup:
+                    {
+                        from: consts.userbase,
+                        localField: "userId",
+                        foreignField: "_id",
+                        as: "user",
+                    }
+                },
+                {
+                    $project:
+                    {
+                        userId: 1,
+                        wrktype: 1,
+                        status: 1,
+                        acc:1,
+                        user:
+                        {
+                            $arrayElemAt: ['$user', 0]
+                        }
                     }
                 }
             ]).toArray()
-            console.log(list);
+            resolve(list);
         })
-    }
+    },
+    Reject_Request_From_UseR: (userId, wrkId) => {
+        return new promise(async (resolve, reject) => {
+            console.log(userId, wrkId);
+            await db.get().collection(consts.request_base).updateOne({ userId: objectId(userId), workersId: objectId(wrkId) },
+                {
+                    $set:
+                    {
+                        status: true
+                    }
+                }).then((data) => {
+                    resolve(data)
+                })
+        })
+    },
+    Confirm_User_Request_By_WorkER: (userid, wrkid,type) => {
+        return new promise((resolve, reject) => {
+            var state =
+            {
+                userId: objectId(userid),
+                workersId: objectId(wrkid),
+                type:type,
+                status: false
+            }
+            db.get().collection(consts.accept_base).insertOne({ ...state }).then((info) => {
+                resolve(info)
+            })
+        })
+    },
+    Change_acc_By_Worker: (userid, wrkid) => {
+        return new promise(async (resolve, reject) => {
+            await db.get().collection(consts.request_base).updateOne({ userId: objectId(userid), workersId: objectId(wrkid) },
+                {
+                    $set:
+                    {
+                        acc: true
+                    }
+                }).then((data)=>
+                {
+                    resolve(data)
+                })
+        })
+    },
 }

@@ -4,14 +4,11 @@ var workerdb = require('../database/workerbase');
 const { log } = require('handlebars/runtime');
 const { userbase } = require('../connection/constants');
 
-var verfyawklogin = (req,res,next)=>
-{
-    if (req.session.wkuser)
-    {
+var verfyawklogin = (req, res, next) => {
+    if (req.session.wkuser) {
         next()
     }
-    else
-    {
+    else {
         res.redirect('/workers/login')
     }
 }
@@ -32,7 +29,7 @@ router.post('/signup', (req, res) => {
     console.log(req.body);
     workerdb.Do_Signup_By_WORKERUsers(req.body).then(async (id) => {
 
-        res.redirect('/workers/signup')
+        res.redirect('/workers/login')
         var image = req.files.image
         if (image) {
             await image.mv("public/workersimage/" + id + ".jpg", (err, data) => {
@@ -66,14 +63,27 @@ router.post('/login', (req, res) => {
         }
     })
 })
-router.get('/logout',(req,res)=>
-{
-     req.session.wkuser = null
-     res.redirect('/workers')
+router.get('/logout', (req, res) => {
+    req.session.wkuser = null
+    res.redirect('/workers/login')
 })
-router.get('/confirm',verfyawklogin,(req,res)=>
-{
-    workerdb.Get_Request_from_users(req.session.wkuser.wkid)
+router.get('/confirm', verfyawklogin, async(req, res) => {
+  await  workerdb.Get_Request_from_users(req.session.wkuser.wkid).then((list) => {
+        console.log(list);
+        res.render('./workers/request-list', { wk: true, wuser: req.session.wkuser, list })
+    })
+})
+router.get('/reject', (req, res) => {
+    workerdb.Reject_Request_From_UseR(req.query.id, req.session.wkuser.wkid).then((data) => {
+        res.redirect('/workers/confirm')
+    })
+})
+router.get('/accept', async (req, res) => {
+    await workerdb.Confirm_User_Request_By_WorkER(req.query.id, req.session.wkuser.wkid,req.query.type).then((info) => {
+        workerdb.Change_acc_By_Worker(req.query.id, req.session.wkuser.wkid).then((data) => {
+            res.redirect('/workers/confirm')
+        })
+    })
 })
 
 module.exports = router;

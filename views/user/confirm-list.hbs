@@ -1,0 +1,50 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="container-fluid">
+                <div class="row mt-5">
+                    <div class="col-md-12 p-5">
+                        {{#if list}}
+                        <table class="table text-center">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Worker Profile</th>
+                                    <th scope="col">Worker Name</th>
+                                    <th scope="col">Phone Number</th>
+                                    <th scope="col">Email Address</th>
+                                    <th scope="col">Worker Type</th>
+                                    <th scope="col">Worker District</th>
+                                    <th scope="col">Mannage Request</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each list}}
+                                <tr>
+                                    <td class="pt-5">{{@index}}</td>
+                                    <td class="p-5"><img src="/workersimage/{{this.workers.wkid}}.jpg"
+                                            style="width: 100px;" height="100px" alt=""></td>
+                                    <td class="pt-5">{{this.workers.name}}</td>
+                                    <td class="pt-5">{{this.workers.ph}}</td>
+                                    <td class="pt-5">{{this.workers.email}}</td>
+                                    <td class="pt-5">{{this.workers.wrktype}}</td>
+                                    <td class="pt-5">{{this.workers.district}}</td>
+                                    <td class="pt-5"><a href="/acceptconfirm?wkid={{this.workers.wkid}}&type={{this.workers.wrktype}}"
+                                            class="btn btn-outline-success">Confirm</a>
+
+                                        <a href="/removeconfirm?wkid={{this.workers.wkid}}" class="btn btn-outline-danger"
+                                            onclick="return confirm('Are you sure to remove ?')">Remove</a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                        {{else}}
+
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

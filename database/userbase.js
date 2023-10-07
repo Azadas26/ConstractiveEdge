@@ -46,34 +46,35 @@ module.exports =
     },
     Individual_Worker_Info: (Id) => {
         return new promise(async (resolve, reject) => {
-            await db.get().collection(consts.workers_base).findOne({wkid: objectId(Id) }).then((info) => {
+            await db.get().collection(consts.workers_base).findOne({ wkid: objectId(Id) }).then((info) => {
                 resolve(info)
             })
         })
     },
-    User_Send_request_TO_WorKEr: (urid, wkid,type) => {
+    User_Send_request_TO_WorKEr: (urid, wkid, type) => {
         return new promise(async (resolve, reject) => {
             var state =
             {
                 userId: objectId(urid),
                 workersId: objectId(wkid),
-                wrktype : type
-            }       
-                    db.get().collection(consts.request_base).insertOne({ ...state }).then((info) => {
-                        var info =
-                        {
-                            msg: null,
-                            wkid: wkid
+                wrktype: type,
+                status: false,
+                acc: false
 
-                        }
-                        resolve(info)
-                    })                  
+            }
+            db.get().collection(consts.request_base).insertOne({ ...state }).then((info) => {
+                var info =
+                {
+                    msg: null,
+                    wkid: wkid,
+
+                }
+                resolve(info)
+            })
         })
     },
-    Check_Wether_the_User_already_requestedORNot: (urid, wkid)=>
-    {
-        return new promise(async(resolve,reject)=>
-        {
+    Check_Wether_the_User_already_requestedORNot: (urid, wkid) => {
+        return new promise(async (resolve, reject) => {
             var data = await db.get().collection(consts.request_base).findOne({ userId: objectId(urid), workersId: objectId(wkid) })
             if (data) {
                 var info =
@@ -84,8 +85,7 @@ module.exports =
                 }
                 resolve(info)
             }
-            else
-            {
+            else {
                 var info =
                 {
                     msg: null,
@@ -96,13 +96,11 @@ module.exports =
             }
         })
     },
-    Get_List_OF_user_Requests : (urid)=>
-    {
-        return new promise(async(resolve,reject)=>
-        {
+    Get_List_OF_user_Requests: (urid) => {
+        return new promise(async (resolve, reject) => {
             var list = await db.get().collection(consts.request_base).aggregate([
                 {
-                    $match :{userId:objectId(urid)}
+                    $match: { userId: objectId(urid) }
                 },
                 {
                     $lookup:
@@ -116,7 +114,8 @@ module.exports =
                 {
                     $project:
                     {
-                        userId:1,
+                        userId: 1,
+                        status: 1,
                         workers:
                         {
                             $arrayElemAt: ['$workers', 0]
@@ -127,13 +126,87 @@ module.exports =
             resolve(list)
         })
     },
-    Remove_WorkersUser_Request_By_user : (urid,wkid)=>
-    {
-        return new promise(async(resolve,reject)=>
-        {
-            await db.get().collection(consts.request_base).deleteOne({userId:objectId(urid),workersId:objectId(wkid)}).then((data)=>
-            {
+    Remove_WorkersUser_Request_By_user: (urid, wkid) => {
+        return new promise(async (resolve, reject) => {
+            await db.get().collection(consts.request_base).deleteOne({ userId: objectId(urid), workersId: objectId(wkid) }).then((data) => {
                 resolve(data)
+            })
+        })
+    },
+    User_confirmation_LIsT: (userid) => {
+        return new promise(async (resolve, reject) => {
+            var list = await db.get().collection(consts.accept_base).aggregate([
+                {
+                    $match:
+                    {
+                        userId: objectId(userid)
+                    }
+                },
+                {
+                    $lookup:
+                    {
+                        from: consts.workers_base,
+                        localField: "workersId",
+                        foreignField: "wkid",
+                        as: "workers",
+                    }
+                },
+                {
+                    $project:
+                    {
+                        userId: 1,
+                        status: 1,
+                        workers:
+                        {
+                            $arrayElemAt: ['$workers', 0]
+                        }
+                    }
+                }
+            ]).toArray()
+            resolve(list);
+        })
+    },
+    Remove_Details_From_Accept_BAsE: (userid, wkid) => {
+        return new promise(async (resolve, reject) => {
+            await db.get().collection(consts.accept_base).deleteOne({ userId: objectId(userid), workersId: objectId(wkid) }).then((data) => {
+                resolve(data)
+            })
+        })
+    },
+    Remove_Details_From_Request_BAsE: (userid, wkid) => {
+        return new promise(async (resolve, reject) => {
+            await db.get().collection(consts.request_base).deleteOne({ userId: objectId(userid), workersId: objectId(wkid) }).then((data) => {
+                resolve(data)
+            })
+        })
+    },
+    Insert_Data_After_User_ConfirMatIOn: (userid, wrkid, type) => {
+        return new promise((resolve, reject) => {
+            var state =
+            {
+                userId: objectId(userid),
+                workersId: objectId(wrkid),
+                type: type,
+                status: false
+            }
+            db.get().collection(consts.userandwkr).insertOne({ ...state }).then((info) => {
+                resolve(info)
+            })
+        })
+    },
+    Remove_Type_and_User_WIth_WorkersFroM_Request_base: (userid, type) => {
+        return new promise(async (resolve, reject) => {
+            await db.get().collection(consts.request_base).deleteMany({ userId: objectId(userid), wrktype: type }).then((data) => {
+                resolve(data)
+            })
+        })
+    },
+    Remove_Type_and_User_WIth_WorkersFroM_Accept: (userid, ttype) => {
+        return new promise(async (resolve, reject) => {
+        
+            await db.get().collection(consts.accept_base).deleteMany({ userId: objectId(userid), type: ttype }).then((data) => {
+                resolve(data)
+                console.log(data);
             })
         })
     }
