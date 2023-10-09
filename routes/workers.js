@@ -110,5 +110,42 @@ router.get('/endwrk', verfyawklogin, (req, res) => {
         res.redirect('/workers/workes')
     })
 })
+router.get('/update',verfyawklogin,(req,res)=>
+{
+    res.render('./workers/update-profile', { wk: true, wuser: req.session.wkuser })
+})
+router.post('/update',verfyawklogin,(req,res)=>
+{
+    req.body.wkid = req.session.wkuser.wkid
+    workerdb.Update_Workers_profile(req.body).then(async(id)=>
+    {
+        var img1 = req.files.image1
+        var img2 = req.files.image2
+        var img3 = req.files.image3
+        if(img1)
+        {
+            await img1.mv("public/update-profile/" + id + "1.jpg", (err, data) => {
+                if (err) {
+                    console.log(err);
+                }
+            })
+        }
+        if (img2) {
+            await img2.mv("public/update-profile/" + id + "2.jpg", (err, data) => {
+                if (err) {
+                    console.log(err);
+                }
+            })
+        }
+        if (img3) {
+            await img3.mv("public/update-profile/" + id + "3.jpg", (err, data) => {
+                if (err) {
+                    console.log(err);
+                }
+            })
+        }
+        res.redirect('/workers')
+    })
+})
 
 module.exports = router;

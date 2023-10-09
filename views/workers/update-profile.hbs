@@ -1,0 +1,49 @@
+<div id="signup" class="container-fluid">
+    <div class="row  p-5">
+        <div class="col-md-12 mt-5 pt-5">
+            <form action="/workers/update" method="post" enctype="multipart/form-data">
+                <h1 class="text-center" style="font-weight: 800; color: rgb(38, 38, 37);"><b>Update Your Profile</b>
+                </h1>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Enter Work Description :</label>
+                    <input name="description" style="height: 100px;" type="text" class="form-control"
+                        id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Description">
+
+                </div>
+                <div class="form-group">
+                    <label class="" for="exampleInputEmail1">Working Place Address :</label>
+                    <input name="address" type="text" style="height: 100px;" class="form-control"
+                        id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Address">
+
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Working Place Pincode :</label>
+                    <input name="pincode" type="number" class="form-control" id="exampleInputEmail1"
+                        aria-describedby="emailHelp" placeholder="6905XXXX">
+
+                </div>
+                <div class="form-group">
+                    <label class="" for="exampleInputPassword1">Upload Your Work Photos :</label>
+                    <input name="image1" type="file" class="form-control" id="exampleInputPassword1"> <br>
+                    <input name="image2" type="file" class="form-control" id="exampleInputPassword1"> <br>
+                    <input name="image3" type="file" class="form-control" id="exampleInputPassword1"> <br>
+                </div>
+                <button type="submit" style="width: 100%; border-radius: 12px;" class="btn btn-dark">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    #signup {
+        background-image: url();
+        background-attachment: fixed;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>

@@ -7,5 +7,37 @@
             <a href="/request?id={{info.wkid}}&type={{info.wrktype}}" class="btn btn-success mt-5 pt-5">Request</a>
             {{/if}}
         </div>
+        <div class="row p-5">
+            <div class="col-md-12 text-center m-5">
+                <table class="table pt-5">
+                    <thead>
+                        <tr>
+                            <th scope="col">NO</th>
+                            <th scope="col">User Name</th>
+                            <th scope="col">User Email Address</th>
+                            <th scope="col">User Feedback</th>
+                            <th scope="col">User Rating</th>
+                            <th scope="col">Work Images</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each list}}
+                        <tr>
+                            <td class="pt-5">{{@index}}</td>
+                            <td class="pt-5">{{this.user.name}}</td>
+                            <td class="pt-5">{{this.user.email}}</td>
+                            <td class="pt-5">{{this.feedback}}</td>
+                            <td class="pt-5">{{this.star}}</td>
+                            <td>
+                                <img class="m-2" src="/user-workes/{{this.user._id}}1.jpg" alt="Work Iamge" style="width: 100px; height: 100px;">
+                                <img class="m-2" src="/user-workes/{{this.user._id}}2.jpg" alt="Work Iamge" style="width: 100px; height: 100px;">
+                                <img class="m-2" src="/user-workes/{{this.user._id}}3.jpg" alt="Work Iamge" style="width: 100px; height: 100px;">
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>

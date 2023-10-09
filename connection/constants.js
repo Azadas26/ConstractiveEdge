@@ -6,5 +6,6 @@ module.exports =
     request_base : "Request_Base",
     accept_base  : "Accept_Base",
     userandwkr : "User&worker",
-    feedback_base : "FeedBack_Base"
+    feedback_base : "FeedBack_Base",
+    update_profile : "Update_Profile"
 }

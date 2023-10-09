@@ -16,6 +16,7 @@ module.exports =
         return new promise(async (resolve, reject) => {
             info.wkid = objectId(info.wkid)
             info.wkingstatus = false
+            info.rating = parseInt("5")
             db.get().collection(consts.workers_base).insertOne(info).then((data) => {
                 resolve(data.ops[0]._id)
             })

@@ -188,9 +188,9 @@ module.exports =
                 workersId: objectId(wrkid),
                 type: type,
                 status: true,
-                endstatus:false,
-                starting : new Date(),
-                ending : null
+                endstatus: false,
+                starting: new Date(),
+                ending: null
             }
             db.get().collection(consts.userandwkr).insertOne({ ...state }).then((info) => {
                 resolve(info)
@@ -206,26 +206,24 @@ module.exports =
     },
     Remove_Type_and_User_WIth_WorkersFroM_Accept: (userid, ttype) => {
         return new promise(async (resolve, reject) => {
-        
+
             await db.get().collection(consts.accept_base).deleteMany({ userId: objectId(userid), type: ttype }).then((data) => {
                 resolve(data)
                 console.log(data);
             })
         })
     },
-    Get_User_Current_Activites : (userid)=>
-    {
-        return new promise(async(resolve,reject)=>
-        {
+    Get_User_Current_Activites: (userid) => {
+        return new promise(async (resolve, reject) => {
             var list = await db.get().collection(consts.userandwkr).aggregate([
                 {
-                    $match : 
+                    $match:
                     {
-                        userId : objectId(userid)
+                        userId: objectId(userid)
                     }
                 },
                 {
-                    $lookup :
+                    $lookup:
                     {
                         from: consts.workers_base,
                         localField: "workersId",
@@ -234,13 +232,13 @@ module.exports =
                     }
                 },
                 {
-                    $project :
+                    $project:
                     {
                         userId: 1,
                         status: 1,
-                        endstatus:1,
-                        starting:1,
-                        ending:1,
+                        endstatus: 1,
+                        starting: 1,
+                        ending: 1,
                         workers:
                         {
                             $arrayElemAt: ['$workers', 0]
@@ -251,39 +249,33 @@ module.exports =
             resolve(list);
         })
     },
-    Upload_Feedback_AND_RatinG : (userid,wkid,info)=>
-    {
-        return new promise(async(resolve,reject)=>
-        {
+    Upload_Feedback_AND_RatinG: (userid, wkid, info) => {
+        return new promise(async (resolve, reject) => {
             var infos =
             {
-                    feedback: info.feedback,
-                star: parseInt(info.star)
-                
+                feedback: info.feedback,
+                star: parseInt(info.star),
+                userId: objectId(userid)
+
             }
             var state =
             {
-                wkId:objectId(wkid),
-                userId:objectId(userid),
-                pro :[infos]
+                wkId: objectId(wkid),
+                pro: [infos]
             }
-            await db.get().collection(consts.feedback_base).findOne({userId:objectId(userid),wkId:objectId(wkid)}).then(async(data)=>
-            {
-                if(data)
-                {
-                    await db.get().collection(consts.feedback_base).updateOne({userId: objectId(userid), wkId: objectId(wkid)},
-                    {
-                        $push :
+            await db.get().collection(consts.feedback_base).findOne({ wkId: objectId(wkid) }).then(async (data) => {
+                if (data) {
+                    await db.get().collection(consts.feedback_base).updateOne({ wkId: objectId(wkid) },
                         {
-                            pro:infos
-                        }
-                    }).then((data)=>
-                    {
-                        resolve(data)
-                    })
+                            $push:
+                            {
+                                pro: infos
+                            }
+                        }).then((data) => {
+                            resolve(data)
+                        })
                 }
-                else
-                {
+                else {
                     await db.get().collection(consts.feedback_base).insertOne({ ...state }).then((data) => {
                         resolve(data)
                     })
@@ -291,5 +283,116 @@ module.exports =
             })
         })
 
+    },
+    Get_User_Feedback_AND_ratiNg: (wkid) => {
+        return new promise(async (resolve, reject) => {
+            var list = await db.get().collection(consts.feedback_base).aggregate([
+                {
+                    $match:
+                    {
+                        wkId: objectId(wkid)
+                    }
+                },
+                {
+                    $unwind: "$pro"
+                },
+                {
+                    $project:
+                    {
+                        feedback: '$pro.feedback',
+                        star: '$pro.star',
+                        userid: '$pro.userId'
+                    }
+                },
+                {
+                    $lookup:
+                    {
+                        from: consts.userbase,
+                        localField: "userid",
+                        foreignField: "_id",
+                        as: 'user'
+
+                    }
+                },
+                {
+                    $project:
+                    {
+                        feedback: 1,
+                        star: 1,
+                        user:
+                        {
+                            $arrayElemAt: ['$user', 0]
+                        }
+                    }
+                }
+            ]).toArray()
+            resolve(list);
+        })
+    },
+    Find_Total_Rating: (wkid) => {
+        return new promise(async (resolve, reject) => {
+            var star = await db.get().collection(consts.feedback_base).aggregate([
+                {
+                    $match:
+                    {
+                        wkId: objectId(wkid)
+                    }
+                },
+                {
+                    $unwind: "$pro"
+                },
+                {
+                    $project:
+                    {
+                        pro: 1,
+                        feedback: '$pro.feedback',
+                        star: '$pro.star',
+                        userid: '$pro.userId'
+                    }
+                },
+                {
+                    $group:
+                    {
+                        _id: null,
+                        total: { $sum: "$star" }
+                    }
+                }
+
+            ]).toArray()
+            resolve(star[0].total);
+        })
+    },
+    Find_Total_Star_coUnt: (wkid) => {
+        return new promise(async (resolve, reject) => {
+            var num = await db.get().collection(consts.feedback_base).aggregate([
+                {
+                    $match:
+                    {
+                        wkId: objectId(wkid)
+                    }
+                },
+                {
+                    $project:
+                    {
+                        len: { $size: "$pro" }
+                    }
+                }
+
+            ]).toArray()
+            resolve(num[0].len);
+        })
+    },
+    Update_Worker_Rating: (wkid, rate) => {
+        return new promise(async (resolve, reject) => {
+            await db.get().collection(consts.workers_base).updateOne({ wkid: objectId(wkid) },
+                {
+                    $set:
+                    {
+                        rating: parseInt(rate)
+                    }
+                }).then((data) => {
+                    resolve(data)
+                })
+        })
     }
 }

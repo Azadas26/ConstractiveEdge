@@ -191,5 +191,15 @@ module.exports =
                 }
             })
         })
+    },
+    Update_Workers_profile : (info)=>
+    {
+        return new promise((resolve,reject)=>
+        {
+            db.get().collection(consts.update_profile).insertOne(info).then((data)=>
+            {
+                resolve(data.ops[0]._id)
+            })
+        })
     }
 }

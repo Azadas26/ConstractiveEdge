@@ -14,14 +14,15 @@
                     <p class="card-text">District : {{this.workers.district}}</p>
                     <p class="card-text">Work Starting : {{this.starting}}</p>
                 </div>
-                <div class="p-3 text-center">
+                <div class=" text-center">
                     <form action="/feedback?wkid={{this.workers.wkid}}" method="post" enctype="multipart/form-data">
-                        <div>
+                        <div class="p-3">
                             <label for="">Write Your Feedback About This Worker :</label>
-                            <input type="text" name="feedback" placeholder="Feedback !" style="height: 60px;">
+                            <input type="text" name="feedback" placeholder="Feedback !"
+                                style="height: 60px; width: 100%;">
                         </div>
                         <div class=" p-3">
-                            <label for="">Give Rating</label>
+                            <label for="">Give Rating :</label>
                             <select id="district" name="star" class="text-center"
                                 style="width: 100%; height: 35px; border: 1;">
                                 <option value="1">1</option>
@@ -30,6 +31,12 @@
                                 <option value="4">4</option>
                                 <option value="5">5</option>
                             </select>
+                        </div>
+                        <div class="">
+                            <label for="">Upload Work Images :</label>
+                            <input type="file" class="p-3" name="img1" style="width: 100%;">
+                            <input type="file" class="p-3" name="img2" style="width: 100%;">
+                            <input type="file" class="p-3" name="img3" style="width: 100%;">
                         </div>
                         <div class="p-3">
                             <input class="btn btn-success" style="width: 100%;" type="submit" value="Submit">
