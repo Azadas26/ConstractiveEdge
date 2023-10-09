@@ -187,7 +187,10 @@ module.exports =
                 userId: objectId(userid),
                 workersId: objectId(wrkid),
                 type: type,
-                status: false
+                status: true,
+                endstatus:false,
+                starting : new Date(),
+                ending : null
             }
             db.get().collection(consts.userandwkr).insertOne({ ...state }).then((info) => {
                 resolve(info)
@@ -209,5 +212,84 @@ module.exports =
                 console.log(data);
             })
         })
+    },
+    Get_User_Current_Activites : (userid)=>
+    {
+        return new promise(async(resolve,reject)=>
+        {
+            var list = await db.get().collection(consts.userandwkr).aggregate([
+                {
+                    $match : 
+                    {
+                        userId : objectId(userid)
+                    }
+                },
+                {
+                    $lookup :
+                    {
+                        from: consts.workers_base,
+                        localField: "workersId",
+                        foreignField: "wkid",
+                        as: "workers"
+                    }
+                },
+                {
+                    $project :
+                    {
+                        userId: 1,
+                        status: 1,
+                        endstatus:1,
+                        starting:1,
+                        ending:1,
+                        workers:
+                        {
+                            $arrayElemAt: ['$workers', 0]
+                        }
+                    }
+                }
+            ]).toArray()
+            resolve(list);
+        })
+    },
+    Upload_Feedback_AND_RatinG : (userid,wkid,info)=>
+    {
+        return new promise(async(resolve,reject)=>
+        {
+            var infos =
+            {
+                    feedback: info.feedback,
+                star: parseInt(info.star)
+                
+            }
+            var state =
+            {
+                wkId:objectId(wkid),
+                userId:objectId(userid),
+                pro :[infos]
+            }
+            await db.get().collection(consts.feedback_base).findOne({userId:objectId(userid),wkId:objectId(wkid)}).then(async(data)=>
+            {
+                if(data)
+                {
+                    await db.get().collection(consts.feedback_base).updateOne({userId: objectId(userid), wkId: objectId(wkid)},
+                    {
+                        $push :
+                        {
+                            pro:infos
+                        }
+                    }).then((data)=>
+                    {
+                        resolve(data)
+                    })
+                }
+                else
+                {
+                    await db.get().collection(consts.feedback_base).insertOne({ ...state }).then((data) => {
+                        resolve(data)
+                    })
+                }
+            })
+        })
+
     }
 }

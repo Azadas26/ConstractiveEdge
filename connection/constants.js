@@ -5,5 +5,6 @@ module.exports =
     workers_base : "Workers_Base",
     request_base : "Request_Base",
     accept_base  : "Accept_Base",
-    userandwkr :"User&worker"
+    userandwkr : "User&worker",
+    feedback_base : "FeedBack_Base"
 }

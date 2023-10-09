@@ -2,26 +2,42 @@
     <div class="row pt-5">
         {{#each wks}}
         <div class="col-md-3 mt-5 pt-5">
-            <a href="/morewkinfo?id={{this.wkid}}" style="text-decoration: none;color: black;">
-                <div class="card m-auto "
-                    style="width: 18rem; border-radius: 20px;border: solid;box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;">
-                    <img class="card-img-top pt-3 pl-3 pr-3" src="/workersimage/{{this.wkid}}.jpg" alt="Card image cap"
-                        style="border-radius: 100%;">
-                    <div class="card-body">
-                        <h5 class="card-title text-center"><b>Name : {{this.name}}</b></h5>
-                        <h5 class="card-title text-center"><b>Proffetion : {{this.wrktype}}</b></h5>
-                        <h5 class="card-title text-center"><b>District : {{this.district}}</b></h5>
-                        <div class="text-center">
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
+            <div class="card m-auto "
+                style="width: 18rem; border-radius: 20px;border: solid;box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;">
+                <img class="card-img-top pt-3 pl-3 pr-3" src="/workersimage/{{this.wkid}}.jpg" alt="Card image cap"
+                    style="border-radius: 100%; width: auto; height: 200px;">
+                <div class="card-body">
+                    <h5 class="card-title text-center"><b>Name : {{this.name}}</b></h5>
+                    <h5 class="card-title text-center"><b>Proffetion : {{this.wrktype}}</b></h5>
+                    <h5 class="card-title text-center"><b>District : {{this.district}}</b></h5>
+                    <div class="text-center">
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </div>
+                    <div class="text-center mt-2">
+                        {{#if this.wkingstatus}}
+
+                        <span></span>
+                        <span>&#128994;</span>
+                        <span>Online</span>
+                        <div class="text-center mt-3">
+                            <a href="/morewkinfo?id={{this.wkid}}" class="btn btn-dark">More Info</a>
+                        </div>
+                        {{else}}
+
+                        <span>🔴</span>
+                        <span>Offline</span>
+                        <div class="text-center mt-3">
+                            <button id="but" class="btn btn-dark" disabled>More Info</button>
                         </div>
 
+                        {{/if}}
                     </div>
                 </div>
-            </a>
+            </div>
         </div>
         {{/each}}
     </div>
@@ -30,5 +46,13 @@
 <style>
     .checked {
         color: orange;
+    }
+
+    #but {
+        background: #222;
+        color: #fff;
+        font-weight: 900;
+        border-radius: 5px;
+        filter: blur(1px);
     }
 </style>

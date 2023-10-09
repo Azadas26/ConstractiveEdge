@@ -1,0 +1,30 @@
+<div class="container-fluid">
+    <div class="row pt-5">
+        {{#if list}}
+        {{#each list}}
+        {{#if this.status}}
+        <div class="col-md-3 p-5">
+            <div class="card m-auto" style="width: 18rem; border: solid;">
+                <div class="card-body text-center">
+                    <h5 class="card-title"><b><i>{{this.user.name}}</i></b></h5>
+                    <p class="card-text">Email : {{this.user.email}}</p>
+                    <p class="card-text">Phone : {{this.user.ph}}</p>
+                    <p class="card-text">District : {{this.user.district}}</p>
+                    <p class="card-text">Address : {{this.user.address}}</p>
+                    <p class="card-text"><b>Worke : {{this.type}}</b></p>
+                    <p class="card-text"><b>Worke Starting: {{this.starting}}</b></p>
+                </div>
+                <div class="text-center">
+                    <div class="m-2">
+                        <a href="/workers/endwrk?id={{this.user._id}}" class="btn btn-success" style="width: 100%;">End Work</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/if}}
+        {{/each}}
+        {{else}}
+
+        {{/if}}
+    </div>
+</div>

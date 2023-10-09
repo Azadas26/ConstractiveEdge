@@ -1,0 +1,40 @@
+<div class="container-fluid">
+    <div class="row pt-5">
+        <div class="col-md-12 mt-5">
+            {{#if list}}
+            <table class="table p-5 text-center">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Workers Name</th>
+                        <th scope="col">Worker Email</th>
+                        <th scope="col">Worker Phone Number</th>
+                        <th scope="col">Worker Type</th>
+                        <th scope="col">Worker District</th>
+                        <th scope="col">Worke Starting</th>
+                        <th scope="col">Worke Ending</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each list}}
+                    {{#if this.endstatus}}
+                    <tr>
+                        <td>{{@index}}</td>
+                        <td>{{this.workers.name}}</td>
+                        <td>{{this.workers.email}}</td>
+                        <td>{{this.workers.ph}}</td>
+                        <td>{{this.workers.wrktype}}</td>
+                        <td>{{this.workers.district}}</td>
+                        <td>{{this.starting}}</td>
+                        <td>{{this.ending}}</td>
+                    </tr>
+                    {{/if}}
+                    {{/each}}
+                </tbody>
+            </table>
+            {{else}}
+
+            {{/if}}
+        </div>
+    </div>
+</div>

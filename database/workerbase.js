@@ -62,7 +62,7 @@ module.exports =
                         userId: 1,
                         wrktype: 1,
                         status: 1,
-                        acc:1,
+                        acc: 1,
                         user:
                         {
                             $arrayElemAt: ['$user', 0]
@@ -87,13 +87,13 @@ module.exports =
                 })
         })
     },
-    Confirm_User_Request_By_WorkER: (userid, wrkid,type) => {
+    Confirm_User_Request_By_WorkER: (userid, wrkid, type) => {
         return new promise((resolve, reject) => {
             var state =
             {
                 userId: objectId(userid),
                 workersId: objectId(wrkid),
-                type:type,
+                type: type,
                 status: false
             }
             db.get().collection(consts.accept_base).insertOne({ ...state }).then((info) => {
@@ -109,10 +109,87 @@ module.exports =
                     {
                         acc: true
                     }
-                }).then((data)=>
-                {
+                }).then((data) => {
                     resolve(data)
                 })
         })
     },
+    Change_Workers_Working_Status: (wkid, status) => {
+        return new promise(async (resolve, reject) => {
+            await db.get().collection(consts.workers_base).updateOne({ wkid: objectId(wkid) },
+                {
+                    $set:
+                    {
+                        wkingstatus: status
+                    }
+                }).then((data) => {
+                    resolve(data)
+                })
+        })
+    },
+    Get_Current_workes: (wkid) => {
+        return new promise(async (resolve, reject) => {
+            var list = await db.get().collection(consts.userandwkr).aggregate([
+                {
+                    $match:
+                    {
+                        workersId: objectId(wkid)
+                    }
+                },
+                {
+                    $lookup:
+                    {
+                        from: consts.userbase,
+                        localField: "userId",
+                        foreignField: "_id",
+                        as: "user",
+                    }
+                },
+                {
+                    $project:
+                    {
+                        userId: 1,
+                        type: 1,
+                        status: 1,
+                        starting: 1,
+                        user:
+                        {
+                            $arrayElemAt: ['$user', 0]
+                        }
+                    }
+                }
+            ]).toArray()
+            resolve(list);
+        })
+    },
+    Update_Work_By_worker: (userid, wkid) => {
+        return new promise(async (resolve, reject) => {
+            await db.get().collection(consts.userandwkr).updateMany({ userId: objectId(userid), workersId: objectId(wkid) },
+                {
+                    $set:
+                    {
+                        status: false,
+                        endstatus: true,
+                        ending: new Date()
+                    }
+                }).then((data) => {
+                    resolve(data)
+                })
+        })
+    },
+    Check_Workers_status: (wkid) => {
+        return new promise(async (resolve, reject) => {
+            await db.get().collection(consts.workers_base).findOne({ wkid: objectId(wkid),wkingstatus:true}).then((data)=>
+            {
+                if(data)
+                {
+                    resolve(true)
+                }
+                else
+                {
+                    resolve(false)
+                }
+            })
+        })
+    }
 }

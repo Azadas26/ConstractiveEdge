@@ -15,13 +15,27 @@ var verfyawklogin = (req, res, next) => {
 /* GET users listing. */
 router.get('/', function (req, res, next) {
     if (req.session.wkuser) {
-        res.render('./workers/first-page', { wk: true, wuser: req.session.wkuser })
+        workerdb.Check_Workers_status(req.session.wkuser.wkid).then((onoff) => {
+            res.render('./workers/first-page', { wk: true, wuser: req.session.wkuser,onoff})
+        })
     }
     else {
         res.render('./workers/first-page', { wk: true })
     }
 
 });
+router.post('/setstatus', verfyawklogin, (req, res) => {
+    if (req.body.status === 'true') {
+        workerdb.Change_Workers_Working_Status(req.session.wkuser.wkid, true).then((data) => {
+            res.redirect('/workers')
+        })
+    }
+    else {
+        workerdb.Change_Workers_Working_Status(req.session.wkuser.wkid, false).then((data) => {
+            res.redirect('/workers')
+        })
+    }
+})
 router.get('/signup', (req, res) => {
     res.render('./workers/signup-page', { wk: true })
 })
@@ -67,8 +81,8 @@ router.get('/logout', (req, res) => {
     req.session.wkuser = null
     res.redirect('/workers/login')
 })
-router.get('/confirm', verfyawklogin, async(req, res) => {
-  await  workerdb.Get_Request_from_users(req.session.wkuser.wkid).then((list) => {
+router.get('/confirm', verfyawklogin, async (req, res) => {
+    await workerdb.Get_Request_from_users(req.session.wkuser.wkid).then((list) => {
         console.log(list);
         res.render('./workers/request-list', { wk: true, wuser: req.session.wkuser, list })
     })
@@ -79,10 +93,21 @@ router.get('/reject', (req, res) => {
     })
 })
 router.get('/accept', async (req, res) => {
-    await workerdb.Confirm_User_Request_By_WorkER(req.query.id, req.session.wkuser.wkid,req.query.type).then((info) => {
+    await workerdb.Confirm_User_Request_By_WorkER(req.query.id, req.session.wkuser.wkid, req.query.type).then((info) => {
         workerdb.Change_acc_By_Worker(req.query.id, req.session.wkuser.wkid).then((data) => {
             res.redirect('/workers/confirm')
         })
+    })
+})
+router.get('/workes', verfyawklogin, (req, res) => {
+    workerdb.Get_Current_workes(req.session.wkuser.wkid).then((list) => {
+        console.log(list);
+        res.render('./workers/your-workes', { wk: true, wuser: req.session.wkuser, list })
+    })
+})
+router.get('/endwrk', verfyawklogin, (req, res) => {
+    workerdb.Update_Work_By_worker(req.query.id, req.session.wkuser.wkid).then((data) => {
+        res.redirect('/workers/workes')
     })
 })
 

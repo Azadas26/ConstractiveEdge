@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light"
     style="background: transparent; position: fixed;width: 100%;z-index: 2;">
-    <a class="navbar-brand " href="/"><b>Home</b></a>
+    <a class="navbar-brand " href="/workers"><b>Home</b></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -9,10 +9,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/workers/confirm">Confirmations<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/workers/confirm">Confirm<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark" href="/workers/update">Update</a>
+                <a class="nav-link text-dark" href="/workers/workes">Workes</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -31,6 +31,9 @@
             </li>
         </ul>
         <div class="dropdown ">
+            {{#if wuser}}<a href="/workers#onoff" style="text-decoration: none;" class="my-sm-0 mr-3 text-dark">{{#if onoff}}<b><span
+                        class="m-1" style="font-size: 10px;">&#128994;</span>online</b>{{else}}<b><span class="m-1"
+                        style="font-size: 10px;">&#128308;</span>ofline</b>{{/if}}</a>{{/if}}
             <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false"
                 style="background: transparent;color: black; border-radius: 50%;">

@@ -15,6 +15,7 @@ module.exports =
     Accept_Worker_Registration: (info) => {
         return new promise(async (resolve, reject) => {
             info.wkid = objectId(info.wkid)
+            info.wkingstatus = false
             db.get().collection(consts.workers_base).insertOne(info).then((data) => {
                 resolve(data.ops[0]._id)
             })

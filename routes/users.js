@@ -64,6 +64,7 @@ router.get('/services', verfylogin, (req, res) => {
 })
 router.post('/services', verfylogin, (req, res) => {
   userdb.FInd_Worker_By_THEUser(req.body).then((wks) => {
+    console.log(wks);
     res.render('./user/workers-list', { user: true, wks, fuser: req.session.user })
   })
 })
@@ -108,7 +109,7 @@ router.get('/removeconfirm', async (req, res) => {
     })
   })
 })
-router.get('/yourwks', (req, res) => {
+router.get('/yourwks',verfylogin,(req, res) => {
   res.render('./user/your-workers-list', { user: true, fuser: req.session.user })
 })
 router.get('/acceptconfirm', async (req, res) => {
@@ -118,6 +119,28 @@ router.get('/acceptconfirm', async (req, res) => {
         res.redirect('/yourwks')
       })
     })
+  })
+})
+router.get('/activties',verfylogin,(req,res)=>
+{
+  userdb.Get_User_Current_Activites(req.session.user._id).then((list)=>
+  {
+    console.log(list);
+    res.render('./user/activity-page', { user: true, fuser: req.session.user, list })
+  })
+})
+router.get('/history',verfylogin,(req,res)=>
+{
+  userdb.Get_User_Current_Activites(req.session.user._id).then((list)=>
+  {
+    res.render('./user/work-history', { user: true, fuser: req.session.user, list })
+  })
+})
+router.post('/feedback',verfylogin,(req,res)=>
+{
+  userdb.Upload_Feedback_AND_RatinG(req.session.user._id,req.query.wkid,req.body).then((data)=>
+  {
+    res.redirect('/activties')
   })
 })
 

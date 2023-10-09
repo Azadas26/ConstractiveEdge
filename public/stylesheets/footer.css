@@ -1,0 +1,52 @@
+.footer {
+    background: #000;
+    font-family: 'Play', sans-serif;
+    text-align: center;
+}
+
+.footer .row {
+
+    padding: 0.6% 0%;
+    color: gray;
+    font-size: 0.8em;
+}
+
+.footer .row a {
+    text-decoration: none;
+    color: gray;
+    transition: 0.5s;
+}
+
+.footer .row a:hover {
+    color: #fff;
+}
+
+.footer .row ul {
+    width: 100%;
+}
+
+.footer .row ul li {
+    display: inline-block;
+
+}
+
+.footer .row a i {
+    font-size: 2em;
+}
+
+@media (max-width:720px) {
+    .footer {
+        text-align: center;
+
+    }
+
+    .footer .row ul li {
+        display: block;
+
+        text-align: center;
+    }
+
+    .footer .row a i {
+        margin: 0% 3%;
+    }
+}
