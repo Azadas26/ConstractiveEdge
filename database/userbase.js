@@ -327,6 +327,7 @@ module.exports =
                 }
             ]).toArray()
             resolve(list);
+            //console.log(list);
         })
     },
     Find_Total_Rating: (wkid) => {
@@ -384,15 +385,106 @@ module.exports =
     },
     Update_Worker_Rating: (wkid, rate) => {
         return new promise(async (resolve, reject) => {
-            await db.get().collection(consts.workers_base).updateOne({ wkid: objectId(wkid) },
-                {
-                    $set:
+            console.log(rate);
+            if(rate == 1)
+            {
+                await db.get().collection(consts.workers_base).updateOne({ wkid: objectId(wkid) },
                     {
-                        rating: parseInt(rate)
-                    }
-                }).then((data) => {
-                    resolve(data)
-                })
+                        $set:
+                        {
+                            rating: parseInt(rate),
+                            one:true,
+                            two:false,
+                            three:false,
+                            four:false,
+                            five:false
+                        }
+                    }).then((data) => {
+                        resolve(data)
+                    })
+            }
+            if (rate == 2) {
+                await db.get().collection(consts.workers_base).updateOne({ wkid: objectId(wkid) },
+                    {
+                        $set:
+                        {
+                            rating: parseInt(rate),
+                            one: false,
+                            two: true,
+                            three: false,
+                            four: false,
+                            five: false
+                        }
+                    }).then((data) => {
+                        resolve(data)
+                    })
+            }
+            if (rate == 3) {
+                await db.get().collection(consts.workers_base).updateOne({ wkid: objectId(wkid) },
+                    {
+                        $set:
+                        {
+                            rating: parseInt(rate),
+                            one: false,
+                            two: false,
+                            three: true,
+                            four: false,
+                            five: false
+                        }
+                    }).then((data) => {
+                        resolve(data)
+                    })
+            }
+            if (rate == 4) {
+                await db.get().collection(consts.workers_base).updateOne({ wkid: objectId(wkid) },
+                    {
+                        $set:
+                        {
+                            rating: parseInt(rate),
+                            one: false,
+                            two: false,
+                            three: false,
+                            four: true,
+                            five: false
+                        }
+                    }).then((data) => {
+                        resolve(data)
+                    })
+            }
+            if (rate == 5) {
+                await db.get().collection(consts.workers_base).updateOne({ wkid: objectId(wkid) },
+                    {
+                        $set:
+                        {
+                            rating: parseInt(rate),
+                            one: false,
+                            two: false,
+                            three: false,
+                            four: false,
+                            five: true
+                        }
+                    }).then((data) => {
+                        resolve(data)
+                    })
+            }
+            
+        })
+    },
+    ChecK_the_Email_aleady_exist_Or_NOt : (mail)=>
+    {
+        return new promise(async(resolve,reject)=>
+        {
+            await db.get().collection(consts.userbase).findOne({email:mail}).then((email)=>
+            {
+                if(email)
+                {
+                    resolve(false)
+                }
+                else
+                {
+                    resolve(true)
+                }
+            })
         })
     }
 }

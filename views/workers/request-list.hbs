@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" style="background-color: #5c6263; height: 100vh;">
     <div class="row">
         <div class="col-md-12">
             <div class="container-fluid">
@@ -33,12 +33,13 @@
                                         <span class="bg-danger p-2">Yor Are Rejected! this request</span>
                                         {{else}}
                                         {{#if this.acc}}
-                                            <span class="bg-success p-2">Wait For The User Confirmation</span>
+                                        <span class="bg-success p-2">Wait For The User Confirmation</span>
                                         {{else}}
-                                            <a href="/workers/accept?id={{this.user._id}}&type={{this.wrktype}}" class="btn btn-success m-1">Accept</a>
-                                            
-                                            <a href="/workers/reject?id={{this.user._id}}" class="btn btn-danger m-1"
-                                                onclick="return confirm('Are your shure to remove this ?')">Reject</a>
+                                        <a href="/workers/accept?id={{this.user._id}}&type={{this.wrktype}}"
+                                            class="btn btn-success m-1">Accept</a>
+
+                                        <a href="/workers/reject?id={{this.user._id}}" class="btn btn-danger m-1"
+                                            onclick="return confirm('Are your shure to remove this ?')">Reject</a>
                                         {{/if}}
                                         {{/if}}
                                     </td>
@@ -47,7 +48,8 @@
                             </tbody>
                         </table>
                         {{else}}
-
+                        <h1 class="text-center text-light" style="font-weight: 800;">There Is No Requests From The Users
+                        </h1>
                         {{/if}}
                     </div>
                 </div>

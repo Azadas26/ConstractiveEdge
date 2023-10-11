@@ -1,11 +1,11 @@
-<div class="container-fluid">
+<div class="container-fluid" style="background-color: #5c6263;height: 100vh;">
     <div class="row">
         <div class="col-md-12">
             <div class="container-fluid">
                 <div class="row mt-5">
                     <div class="col-md-12 p-5">
                         {{#if list}}
-                        <table class="table text-center">
+                        <table class="table text-center text-light">
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
@@ -30,7 +30,7 @@
                                     <td class="pt-5">{{this.workers.email}}</td>
                                     <td class="pt-5">{{this.workers.wrktype}}</td>
                                     <td class="pt-5">{{this.workers.district}}</td>
-                                    <td class="pt-5">
+                                    <td class="pt-5 text-dark">
                                         {{#if this.status}}
                                         <span class="bg-danger p-2">Rejected!</span>
                                         {{else}}
@@ -45,7 +45,7 @@
                             </tbody>
                         </table>
                         {{else}}
-
+                            <h1 class="text-center text-light" style="font-weight: 800;">RequEsts Not Available</h1>
                         {{/if}}
                     </div>
                 </div>

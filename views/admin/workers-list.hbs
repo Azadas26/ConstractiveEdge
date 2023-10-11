@@ -1,0 +1,47 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="container-fluid">
+                <div class="row mt-5">
+                    <div class="col-md-12 p-5">
+                        {{#if list}}
+                        <table class="table text-center text-dark">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Worker Profile</th>
+                                    <th scope="col">Worker Name</th>
+                                    <th scope="col">Phone Number</th>
+                                    <th scope="col">Email Address</th>
+                                    <th scope="col">Worker Type</th>
+                                    <th scope="col">Worker District</th>
+                                    <th scope="col">Mannage </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each list}}
+                                <tr>
+                                    <td class="pt-5">{{@index}}</td>
+                                    <td class="p-5"><img src="/workersimage/{{this.wkid}}.jpg" style="width: 100px;"
+                                            height="100px" alt=""></td>
+                                    <td class="pt-5">{{this.name}}</td>
+                                    <td class="pt-5">{{this.ph}}</td>
+                                    <td class="pt-5">{{this.email}}</td>
+                                    <td class="pt-5">{{this.wrktype}}</td>
+                                    <td class="pt-5">{{this.district}}</td>
+                                    <td class="pt-5"><a href="/admin/wkremove?wkid={{this.wkid}}"
+                                            class="btn btn-outline-danger"
+                                            onclick="return confirm('Are you sure to remove ?')">Remove</a></td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                        {{else}}
+
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

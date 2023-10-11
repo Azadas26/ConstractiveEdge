@@ -1,0 +1,40 @@
+<div id="signup" class="container-fluid">
+    <div class="row " style="">
+        <div class="col-md-12">
+            <form action="/admin/login" method="post" enctype="multipart/form-data">
+                <h1 class="text-center" style="font-weight: 800; color: rgb(38, 38, 37);"><b>Admin Login Page</b>
+                </h1>
+                <p style="color: red;">{{#if err}}
+                    {{err}}
+                    {{/if}}
+                </p>
+                <div class="form-group">
+                    <label class="" for="exampleInputEmail1">User Name</label>
+                    <input name="name" type="text" class="form-control" id="exampleInputEmail1"
+                        aria-describedby="emailHelp" placeholder="Email">
+
+                </div>
+                <div class="form-group">
+                    <label class="" for="exampleInputPassword1">Password</label>
+                    <input name="password" type="password" class="form-control" id="exampleInputPassword1"
+                        placeholder="Password">
+                </div>
+                <button type="submit" style="width: 100%; border-radius: 12px;" class="btn btn-dark">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    #signup {
+        background-image: url();
+        background-attachment: fixed;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>

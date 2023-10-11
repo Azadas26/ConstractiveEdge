@@ -22,12 +22,32 @@ router.get('/', function (req, res, next) {
   }
 });
 router.get('/signup', (req, res) => {
-  res.render('./user/signup-page', { user: true })
+  if (req.session.em)
+  {
+    res.render('./user/signup-page', { user: true,errmsg:"This Mail Address Is Already Exist"})
+    req.session.em= false
+  }
+  else
+  {
+    res.render('./user/signup-page', { user: true })
+  }
+  
 })
 router.post('/signup', (req, res) => {
-  console.log(req.body);
-  userdb.Do_Signup_By_Users(req.body).then((id) => {
-    res.redirect('/login')
+  userdb.ChecK_the_Email_aleady_exist_Or_NOt(req.body.email).then((status)=>
+  {
+     if(status)
+     {
+       //console.log(req.body);
+       userdb.Do_Signup_By_Users(req.body).then((id) => {
+         res.redirect('/login')
+       })
+     }
+     else
+     {
+        req.session.em = true
+        res.redirect('/signup')
+     }
   })
 })
 router.get('/login', (req, res) => {

@@ -1,11 +1,13 @@
-<div class="container-fluid">
+<div class="container-fluid" style="background-color: #5c6263;">
     <div class="row pt-5">
-        <div class="col-md-6 p-5">
-            {{#if list}}
-            {{#each list}}
+        {{#if list}}
+        {{#each list}}
+        {{#if this.status}}
+        <div class="col-md-3 p-5">
             {{#if this.status}}
-            <div class="card m-auto" style="width: 26rem; border: solid;">
-                <img class="card-img-top p-3" src="/workersimage/{{this.workers.wkid}}.jpg" alt="Card image cap">
+            <div class="card m-auto" style="width: auto; border: solid;">
+                <img class="card-img-top p-3" src="/workersimage/{{this.workers.wkid}}.jpg" alt="Card image cap"
+                    style="height: 400px;">
                 <div class="card-body text-center">
                     <h5 class="card-title">{{this.workers.wrktype}}</h5>
                     <p class="card-text">Name : {{this.workers.name}}</p>
@@ -44,11 +46,14 @@
                     </form>
                 </div>
             </div>
-            {{/if}}
-            {{/each}}
             {{else}}
 
             {{/if}}
         </div>
+        {{/if}}
+        {{/each}}
+        {{else}}
+            <h1 class="mt-5">No Activies Found</h1>
+        {{/if}}
     </div>
 </div>

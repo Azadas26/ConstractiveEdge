@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light"
     style="background: transparent; position: fixed;width: 100%;z-index: 2;">
-    <a class="navbar-brand " href="/workers"><b>Home</b></a>
+    <a class="navbar-brand text-dark" href="/workers" style="font-size: 22px;"><b>Home</b></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -9,30 +9,28 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/workers/confirm">Confirm<span class="sr-only">(current)</span></a>
+                <a class="nav-link text-dark" href="/workers/confirm" style="font-size: 22px;"><b>Confirm</b></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark" href="/workers/workes">Workes</a>
+                <a class="nav-link text-dark" href="/workers/workes" style="font-size: 22px;"><b>Workes</b></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark" href="/workers/update">Update</a>
+                <a class="nav-link text-dark" href="/workers/update" style="font-size: 22px;"><b>Update</b></a>
             </li>
-           
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
+
         </ul>
         <div class="dropdown ">
-            {{#if wuser}}<a href="/workers#onoff" style="text-decoration: none;" class="my-sm-0 mr-3 text-dark">{{#if onoff}}<b><span
-                        class="m-1" style="font-size: 10px;">&#128994;</span>online</b>{{else}}<b><span class="m-1"
-                        style="font-size: 10px;">&#128308;</span>ofline</b>{{/if}}</a>{{/if}}
+            {{#if wuser}}<a href="/workers#onoff" style="text-decoration: none;" class="my-sm-0 mr-3 text-dark">{{#if
+                onoff}}<b><span class="m-1 text-light"
+                        style="font-size: 10px;">&#128994;</span>Online</b>{{else}}<b><span class="m-1"
+                        style="font-size: 10px;">&#128308;</span>Ofline</b>{{/if}}</a>{{/if}}
             <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false"
                 style="background: transparent;color: black; border-radius: 50%;">
                 {{#if wuser}}
-                <b>{{wuser.name}}</b>
+                <b class="text-dark">{{wuser.name}}</b>
                 {{else}}
-                <b>Account</b>
+                <b class="text-dark">Account</b>
                 {{/if}}
             </button>
             {{#if wuser}}

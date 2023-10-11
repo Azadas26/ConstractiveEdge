@@ -1,8 +1,8 @@
-<div class="container-fluid">
+<div class="container-fluid" style="background-color: #5c6263;height: 100vh;">
     <div class="row pt-5">
         <div class="col-md-12 mt-5">
             {{#if list}}
-            <table class="table p-5 text-center">
+            <table class="table p-5 text-center text-light">
                 <thead>
                     <tr>
                         <th scope="col">No</th>
@@ -17,23 +17,25 @@
                 </thead>
                 <tbody>
                     {{#each list}}
-                    {{#if this.endstatus}}
-                    <tr>
-                        <td>{{@index}}</td>
-                        <td>{{this.workers.name}}</td>
-                        <td>{{this.workers.email}}</td>
-                        <td>{{this.workers.ph}}</td>
-                        <td>{{this.workers.wrktype}}</td>
-                        <td>{{this.workers.district}}</td>
-                        <td>{{this.starting}}</td>
-                        <td>{{this.ending}}</td>
-                    </tr>
+                    {{#if this.workers}}
+                        {{#if this.endstatus}}
+                        <tr class="">
+                            <td class="p-5">{{@index}}</td>
+                            <td class="p-5">{{this.workers.name}}</td>
+                            <td class="p-5">{{this.workers.email}}</td>
+                            <td class="p-5">{{this.workers.ph}}</td>
+                            <td class="p-5">{{this.workers.wrktype}}</td>
+                            <td class="p-5">{{this.workers.district}}</td>
+                            <td class="p-5">{{this.starting}}</td>
+                            <td class="p-5">{{this.ending}}</td>
+                        </tr>
+                        {{/if}}
                     {{/if}}
                     {{/each}}
                 </tbody>
             </table>
             {{else}}
-
+                <h1 class="text-center text-light" style="font-weight: 800;">Your Not Choose Any Work Or Work In progress</h1>
             {{/if}}
         </div>
     </div>

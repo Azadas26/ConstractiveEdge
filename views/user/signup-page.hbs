@@ -4,6 +4,9 @@
             <form action="/signup" method="post" enctype="multipart/form-data">
                 <h1 class="text-center" style="font-weight: 800; color: rgb(38, 38, 37);"><b>Create Your Account</b>
                 </h1>
+                {{#if errmsg}}
+                <p style="color: red;"><i><b>{{errmsg}}</b></i></p>
+                {{/if}}
                 <div class="form-group">
                     <label for="exampleInputEmail1"><b>Enter Name</b></label>
                     <input name="name" type="text" class="form-control" id="exampleInputEmail1"

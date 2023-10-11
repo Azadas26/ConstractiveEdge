@@ -84,7 +84,9 @@ router.get('/logout', (req, res) => {
 router.get('/confirm', verfyawklogin, async (req, res) => {
     await workerdb.Get_Request_from_users(req.session.wkuser.wkid).then((list) => {
         console.log(list);
-        res.render('./workers/request-list', { wk: true, wuser: req.session.wkuser, list })
+        workerdb.Check_Workers_status(req.session.wkuser.wkid).then((onoff) => {
+            res.render('./workers/request-list', { wk: true, wuser: req.session.wkuser, list,onoff})
+        })
     })
 })
 router.get('/reject', (req, res) => {
@@ -102,7 +104,9 @@ router.get('/accept', async (req, res) => {
 router.get('/workes', verfyawklogin, (req, res) => {
     workerdb.Get_Current_workes(req.session.wkuser.wkid).then((list) => {
         console.log(list);
-        res.render('./workers/your-workes', { wk: true, wuser: req.session.wkuser, list })
+        workerdb.Check_Workers_status(req.session.wkuser.wkid).then((onoff) => {
+            res.render('./workers/your-workes', { wk: true, wuser: req.session.wkuser, list,onoff})
+        })
     })
 })
 router.get('/endwrk', verfyawklogin, (req, res) => {
@@ -112,7 +116,9 @@ router.get('/endwrk', verfyawklogin, (req, res) => {
 })
 router.get('/update',verfyawklogin,(req,res)=>
 {
-    res.render('./workers/update-profile', { wk: true, wuser: req.session.wkuser })
+    workerdb.Check_Workers_status(req.session.wkuser.wkid).then((onoff) => {
+        res.render('./workers/update-profile', { wk: true, wuser: req.session.wkuser,onoff})
+    })
 })
 router.post('/update',verfyawklogin,(req,res)=>
 {

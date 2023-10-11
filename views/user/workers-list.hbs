@@ -1,7 +1,7 @@
-<div class="container-fluid">
+<div class="container-fluid" style="background-color: #5c6263;">
     <div class="row pt-5">
         {{#each wks}}
-        <div class="col-md-3 mt-5 pt-5">
+        <div class="col-md-3 mt-5 p-5">
             <div class="card m-auto "
                 style="width: 18rem; border-radius: 20px;border: solid;box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;">
                 <img class="card-img-top pt-3 pl-3 pr-3" src="/workersimage/{{this.wkid}}.jpg" alt="Card image cap"
@@ -10,6 +10,7 @@
                     <h5 class="card-title text-center"><b>Name : {{this.name}}</b></h5>
                     <h5 class="card-title text-center"><b>Proffetion : {{this.wrktype}}</b></h5>
                     <h5 class="card-title text-center"><b>District : {{this.district}}</b></h5>
+                    {{#if three}}
                     <div class="text-center">
                         <span class="fa fa-star checked"></span>
                         <span class="fa fa-star checked"></span>
@@ -17,8 +18,44 @@
                         <span class="fa fa-star"></span>
                         <span class="fa fa-star"></span>
                     </div>
+                    {{/if}}
+                    {{#if two}}
+                    <div class="text-center">
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </div>
+                    {{/if}}
+                    {{#if one}}
+                    <div class="text-center">
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star "></span>
+                        <span class="fa fa-star "></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </div>
+                    {{/if}}
+                    {{#if five}}
+                    <div class="text-center">
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                    </div>
+                    {{/if}}
+                    {{#if four}}
+                    <div class="text-center">
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                    </div>
+                    {{/if}}
                     <div class="text-center mt-2">
-                    <p>Rating {{this.rating}}</p>
                         {{#if this.wkingstatus}}
 
                         <span></span>
