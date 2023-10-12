@@ -1,13 +1,42 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
+    <div class="row pt-5">
+        <div class="col-md-12 mt-5 pt-5 text-center">
             {{#if msg}}
-            <h1>{{msg}}</h1>
+            <h1 class="m-5 text-danger">{{msg}}</h1>
             {{else}}
-            <a href="/request?id={{info.wkid}}&type={{info.wrktype}}" class="btn btn-success mt-5 pt-5">Request</a>
+            <div class="m-5">
+                <h1 style="font-weight: 800;"><b><i>"If You Need This Worker Please Send Request And Waiting For The
+                            Worker Responce"</i></b></h1>
+                <a href="/request?id={{info.wkid}}&type={{info.wrktype}}" style="width: 20%;"
+                    class="btn btn-success m-2">Request</a>
+            </div>
             {{/if}}
         </div>
-        <div class="row p-5">
+        {{#if wklist}}
+        {{#each wklist}}
+        <div class="col-md-6">
+            <div class="card mb-3 m-auto p-3 text-center" style="width: 70%;border: solid;">
+                <div class="w3-content w3-display-container">
+                    <img class="mySlide" src="/update-profile/{{this._id}}1.jpg" style="width:100%;height: 350px;">
+                    <img class="mySlide" src="/update-profile/{{this._id}}2.jpg" style="width:100%;height: 350px;">
+                    <img class="mySlide" src="/update-profile/{{this._id}}3.jpg" style="width:100%;height: 350px;">
+
+                    <button class="w3-button w3-black w3-display-left ml-5 mt-4" style="border-radius: 20px;"
+                        onclick="plusDivs(-1)">&#10094;</button>
+                    <button class="w3-button w3-black w3-display-right mr-5" style="border-radius: 20px;"
+                        onclick="plusDivs(1)">&#10095;</button>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">{{this.description}}.</p>
+                    <p class="card-text">Address : {{this.address}}.</p>
+                    <p class="card-text">Pincode : {{this.pincode}}.</p>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+        {{/if}}
+        <div class="row" style="width: 100%;">
             <div class="col-md-12 text-center m-5">
                 <table class="table pt-5">
                     <thead>
@@ -29,9 +58,12 @@
                             <td class="pt-5">{{this.feedback}}</td>
                             <td class="pt-5">{{this.star}} / 5</td>
                             <td>
-                                <img class="m-2" src="/user-workes/{{this.user._id}}1.jpg" alt="Work Iamge" style="width: 100px; height: 100px;">
-                                <img class="m-2" src="/user-workes/{{this.user._id}}2.jpg" alt="Work Iamge" style="width: 100px; height: 100px;">
-                                <img class="m-2" src="/user-workes/{{this.user._id}}3.jpg" alt="Work Iamge" style="width: 100px; height: 100px;">
+                                <img class="m-2" src="/user-workes/{{this.user._id}}1.jpg" alt="Work Iamge"
+                                    style="width: 100px; height: 100px;">
+                                <img class="m-2" src="/user-workes/{{this.user._id}}2.jpg" alt="Work Iamge"
+                                    style="width: 100px; height: 100px;">
+                                <img class="m-2" src="/user-workes/{{this.user._id}}3.jpg" alt="Work Iamge"
+                                    style="width: 100px; height: 100px;">
                             </td>
                         </tr>
                         {{/each}}
@@ -41,3 +73,22 @@
         </div>
     </div>
 </div>
+<script>
+    var Index = 1;
+    showDivs(Index);
+
+    function plusDivs(n) {
+        showDivs(Index += n);
+    }
+
+    function showDivs(n) {
+        var i;
+        var x = document.getElementsByClassName("mySlide");
+        if (n > x.length) { Index = 1 }
+        if (n < 1) { Index = x.length }
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        x[Index - 1].style.display = "block";
+    }
+</script>

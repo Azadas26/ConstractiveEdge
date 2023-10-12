@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var userdb = require('../database/userbase')
-
+var workerdb = require('../database/workerbase');
 
 var verfylogin = (req, res, next) => {
   if (req.session.user) {
@@ -91,15 +91,17 @@ router.post('/services', verfylogin, (req, res) => {
 router.get('/morewkinfo', (req, res) => {
   userdb.Individual_Worker_Info(req.query.id).then((info) => {
     userdb.Get_User_Feedback_AND_ratiNg(req.query.id).then((list) => {
-      userdb.Check_Wether_the_User_already_requestedORNot(req.session.user._id, req.query.id).then((infos) => {
-        if (infos.msg) {
-
-          res.render('./user/worker-page', { user: true, fuser: req.session.user, info, msg: infos.msg, list })
-        }
-        else {
-
-          res.render('./user/worker-page', { user: true, fuser: req.session.user, info, list })
-        }
+      workerdb.Get_Updated_profile_details(req.query.id).then((wklist) => {
+        userdb.Check_Wether_the_User_already_requestedORNot(req.session.user._id, req.query.id).then((infos) => {
+          if (infos.msg) {
+  
+            res.render('./user/worker-page', { user: true, fuser: req.session.user, info, msg: infos.msg, list ,wklist})
+          }
+          else {
+  
+            res.render('./user/worker-page', { user: true, fuser: req.session.user, info, list,wklist})
+          }
+        })
       })
     })
 

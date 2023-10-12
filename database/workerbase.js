@@ -201,5 +201,13 @@ module.exports =
                 resolve(data.ops[0]._id)
             })
         })
+    },
+    Get_Updated_profile_details : (wkid)=>
+    {
+        return new promise(async(resolve,reject)=>
+        {
+            var wklist =await db.get().collection(consts.update_profile).find({wkid:wkid}).toArray()
+            resolve(wklist)
+        })
     }
 }
