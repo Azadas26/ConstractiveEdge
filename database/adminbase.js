@@ -1,5 +1,5 @@
 var promise = require('promise')
-var bcrypt = require('bcrypt')
+var bcrypt = require('bcryptjs')
 var objectId = require('mongodb').ObjectId
 var db = require('../connection/connect')
 var consts = require('../connection/constants')
