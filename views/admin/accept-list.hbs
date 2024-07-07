@@ -10,6 +10,7 @@
                         <th scope="col">Worker District</th>
                         <th scope="col">Email Address</th>
                         <th scope="col">Phone Number</th>
+                          <th scope="col">Description</th>
                         <th scope="col">Options</th>
                     </tr>
                 </thead>
@@ -22,6 +23,7 @@
                         <td class="pt-5">{{this.district}}</td>
                         <td class="pt-5">{{this.email}}</td>
                         <td class="pt-5">{{this.ph}}</td>
+                         <td class="pt-5">{{this.description}}</td>
                         <td>
                             <form action="/admin/accept" method="post" enctype="multipart/form-data">
                                 <input type="text" name="name" value="{{this.name}}" style="display: none;">
@@ -31,6 +33,7 @@
                                 <input type="text" name="wrktype" value="{{this.wrktype}}" style="display: none;">
                                 <input type="text" name="district" value="{{this.district}}" style="display: none;">
                                 <input type="text" name="password" value="{{this.password}}" style="display: none;">
+                                   <input type="text" name="description" value="{{this.description}}" style="display: none;">
                                 <input type="submit" class="btn btn-success m-2" value="Accept">
                             </form>
 

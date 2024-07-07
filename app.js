@@ -11,6 +11,7 @@ var session = require('express-session')
 var userRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
 var workerRouter = require('./routes/workers');
+var constructiveedge= require('./routes/starting');
 
 var app = express();
 
@@ -27,9 +28,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileUpload())
 app.use(session({secret:"key",cookie:{maxAge:600000}}))
 
+
 app.use('/', userRouter);
 app.use('/admin', adminRouter);
 app.use('/workers', workerRouter);
+app.use('/constructiveedge', constructiveedge);
 
 db.connection().then((data)=>
 {

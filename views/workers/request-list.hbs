@@ -15,6 +15,7 @@
                                     <th scope="col">Home Address</th>
                                     <th scope="col">User District</th>
                                     <th scope="col">For</th>
+                                    <th scope="col">Location</th>
                                     <th scope="col">Mannage Request</th>
                                 </tr>
                             </thead>
@@ -28,6 +29,8 @@
                                     <td class="pt-5">{{this.user.address}}</td>
                                     <td class="pt-5">{{this.user.district}}</td>
                                     <td class="pt-5">{{this.wrktype}} Working</td>
+                                    <td class="pt-5"><a href="https://www.google.com/maps?q={{this.late}},{{this.long}}"
+                                            class="btn btn-success">Location</a></td>
                                     <td class="pt-5">
                                         {{#if this.status}}
                                         <span class="bg-danger p-2">Yor Are Rejected! this request</span>

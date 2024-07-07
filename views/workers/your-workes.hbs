@@ -13,10 +13,13 @@
                     <p class="card-text">Address : {{this.user.address}}</p>
                     <p class="card-text"><b>Worke : {{this.type}}</b></p>
                     <p class="card-text"><b>Worke Starting: {{this.starting}}</b></p>
+
                 </div>
                 <div class="text-center">
                     <div class="m-2">
-                        <a href="/workers/endwrk?id={{this.user._id}}" class="btn btn-success" style="width: 100%;">End
+                        <a href="https://www.google.com/maps?q={{this.late}},{{this.long}}"
+                            class="btn btn-success mb-2" style="width: 100%;">Location</a>
+                        <a href="/workers/endwrk?id={{this.user._id}}" class="btn btn-danger" style="width: 100%;">End
                             Work</a>
                     </div>
                 </div>

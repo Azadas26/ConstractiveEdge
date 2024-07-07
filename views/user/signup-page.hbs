@@ -56,6 +56,12 @@
                     <input name="password" type="password" class="form-control" id="exampleInputPassword1"
                         placeholder="Password">
                 </div>
+                <div>
+                    <button type="button" name="location" class="form-control ml-2" id="location"
+                        aria-describedby="emailHelp" style="width: 35%;" onclick="getUserLocation()">Location</button>
+                    <input name="late" type="text" style="display: none;" id="late">
+                    <input name="long" type="text" style="display: none;" id="long">
+                </div>
                 <div class="form-group" style="text-align: right;">
                     <a href="/login" class="text-dark"><b>Alredy Have An Account ?</b></a>
                 </div>
@@ -78,3 +84,26 @@
         justify-content: center;
     }
 </style>
+
+<script>
+    function getUserLocation() {
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+
+    function showPosition(position) {
+        console.log("Called")
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        document.getElementById("late").value = "" + latitude
+        document.getElementById("long").value = "" + longitude
+
+        // You can use the obtained coordinates to open a map or perform navigation
+        // For example, opening Google Maps
+        // window.open(`https://www.google.com/maps?q=${latitude},${longitude}`, "_blank");
+    }
+</script>
