@@ -14,9 +14,9 @@ var verfylogin = (req, res, next) => {
 /* GET home page. */
 router.get("/", function (req, res, next) {
   if (req.session.user) {
-    res.render("./user/first-page", { user: true, fuser: req.session.user });
+    res.render("./user/first-page", { fuser: req.session.user });
   } else {
-    res.render("./user/first-page", { user: true });
+    res.render("./user/first-page");
   }
 });
 router.get("/signup", (req, res) => {
@@ -27,7 +27,7 @@ router.get("/signup", (req, res) => {
     });
     req.session.em = false;
   } else {
-    res.render("./user/signup-page", { user: true });
+    res.render("./user/signup-page",);
   }
 });
 router.post("/signup", (req, res) => {
@@ -46,12 +46,11 @@ router.post("/signup", (req, res) => {
 router.get("/login", (req, res) => {
   if (req.session.false) {
     res.render("./user/login-page", {
-      user: true,
       err: "Incorrect Username or Password",
     });
     req.session.false = false;
   } else {
-    res.render("./user/login-page", { user: true });
+    res.render("./user/login-page");
   }
 });
 
@@ -73,8 +72,11 @@ router.get("/logout", (req, res) => {
   req.session.user = null;
   res.redirect("/login");
 });
-router.get("/services", verfylogin, (req, res) => {
-  res.render("./user/services", { user: true, fuser: req.session.user });
+router.get("/services", verfylogin, async (req, res) => {
+  const { wrktype, workers } = await userdb.Get_Work_type_forSearch()
+  console.log(workers);
+
+  res.render("./user/services", { user: true, fuser: req.session.user, wrktype: JSON.stringify(wrktype), workers });
 });
 router.post("/services", verfylogin, (req, res) => {
   userdb.FInd_Worker_By_THEUser(req.body).then((wks) => {
@@ -86,7 +88,7 @@ router.post("/services", verfylogin, (req, res) => {
     });
   });
 });
-router.get("/morewkinfo", (req, res) => {
+router.get("/morewkinfo", verfylogin,(req, res) => {
   userdb.Individual_Worker_Info(req.query.id).then((info) => {
     userdb.Get_User_Feedback_AND_ratiNg(req.query.id).then((list) => {
       workerdb.Get_Updated_profile_details(req.query.id).then((wklist) => {
@@ -96,6 +98,8 @@ router.get("/morewkinfo", (req, res) => {
             req.query.id
           )
           .then((infos) => {
+            console.log(wklist[0]);
+
             if (infos.msg) {
               res.render("./user/worker-page", {
                 user: true,
@@ -103,7 +107,8 @@ router.get("/morewkinfo", (req, res) => {
                 info,
                 msg: infos.msg,
                 list,
-                wklist,
+                wrklist: wklist[0],
+                allwrks:wklist
               });
             } else {
               res.render("./user/worker-page", {
@@ -111,7 +116,8 @@ router.get("/morewkinfo", (req, res) => {
                 fuser: req.session.user,
                 info,
                 list,
-                wklist,
+                wrklist: wklist[0],
+                allwrks:wklist
               });
             }
           });
@@ -128,11 +134,13 @@ router.get("/request", (req, res) => {
       req.query.type
     )
     .then((info) => {
-      res.redirect(`/morewkinfo?id=${info.wkid}`);
+      res.redirect(`/requests`);
     });
 });
 router.get("/requests", verfylogin, (req, res) => {
   userdb.Get_List_OF_user_Requests(req.session.user._id).then((list) => {
+    console.log(list);
+
     res.render("./user/request-list", {
       user: true,
       fuser: req.session.user,
@@ -149,6 +157,8 @@ router.get("/removereq", verfylogin, (req, res) => {
 });
 router.get("/confirm", verfylogin, (req, res) => {
   userdb.User_confirmation_LIsT(req.session.user._id).then((list) => {
+    console.log(list);
+
     res.render("./user/confirm-list", {
       user: true,
       fuser: req.session.user,
@@ -190,14 +200,15 @@ router.get("/acceptconfirm", async (req, res) => {
               req.query.type
             )
             .then((data3) => {
-              res.redirect("/yourwks");
+              //res.redirect("/yourwks");
+              res.redirect("/confirm");
             });
         });
     });
 });
 router.get("/activties", verfylogin, (req, res) => {
   userdb.Get_User_Current_Activites(req.session.user._id).then((list) => {
-    console.log(list);
+    console.log(list.length);
     res.render("./user/activity-page", {
       user: true,
       fuser: req.session.user,
@@ -206,7 +217,11 @@ router.get("/activties", verfylogin, (req, res) => {
   });
 });
 router.get("/history", verfylogin, (req, res) => {
-  userdb.Get_User_Current_Activites(req.session.user._id).then((list) => {
+  console.log(req.session.user._id);
+  
+  userdb.Get_User_Current_Activiteshistory(req.session.user._id).then((list) => {
+    console.log(list);
+    
     res.render("./user/work-history", {
       user: true,
       fuser: req.session.user,

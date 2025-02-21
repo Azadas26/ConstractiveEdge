@@ -1,43 +1,91 @@
 <div id="signup" class="container-fluid">
-    <div class="row " style="">
-        <div class="col-md-12">
-            <form action="/workers/login" method="post" enctype="multipart/form-data">
-                <h1 class="text-center" style="font-weight: 800; color: rgb(38, 38, 37);"><b>Switch To Your Account</b>
-                </h1>
-                <p style="color: red;">{{#if err}}
+            <form style="display: flex;flex-direction: column;align-items: center;justify-content: center;gap: 15px; border-radius: 20px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;" class="p-5"
+                action="/workers/login" method="post" enctype="multipart/form-data">
+                <p class="text-center m-0"
+                    style="font-size: 28px; font-weight: 800; color: rgb(38, 38, 37); font-family: 'Poppins', sans-serif;"><b>Login</b>
+                </p>
+                <p style="margin: 0; font-size: 14px;font-weight: 800;" class="text-center">Login to your account</p>
+                <p style="margin: 0; color: red;font-size: 12px;">{{#if err}}
                     {{err}}
                     {{/if}}
                 </p>
-                <div class="form-group">
-                    <label class="" for="exampleInputEmail1">Email address</label>
+                <div class="form-group m-0">
+                    <label class="mb-1" for="exampleInputEmail1">Email address</label>
                     <input name="email" type="email" class="form-control" id="exampleInputEmail1"
                         aria-describedby="emailHelp" placeholder="Email">
 
                 </div>
-                <div class="form-group">
-                    <label class="" for="exampleInputPassword1">Password</label>
+                <div class="form-group m-0">
+                    <label class="mb-1" for="exampleInputPassword1">Password</label>
                     <input name="password" type="password" class="form-control" id="exampleInputPassword1"
                         placeholder="Password">
                 </div>
-                <div class="form-group" style="text-align: right;">
-                    <a href="/workers/signup" class="text-dark">Create Your Account...</a>
+                <div class="form-group m-0" style="width: 100%; text-align: right;">
+                    <a href="/workers/signup" class="text-dark">create your account</a>
                 </div>
-                <button type="submit" style="width: 100%; border-radius: 12px;" class="btn btn-dark">Submit</button>
+                <button id="submitbtn" type="submit" style="width: 100%; border-radius: 12px;"
+                    class="btn text-light">Submit</button>
             </form>
-        </div>
-    </div>
+       
 </div>
 
 <style>
     #signup {
-        background-image: url();
+        background-image: url(/design/bg_img.png);
         background-attachment: fixed;
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
-        height: 100vh;
+        min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    label {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        font-weight: 800;
+    }
+
+    input {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+    }
+
+    p{
+        font-family: 'Poppins', sans-serif;
+    }
+
+    a {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        font-style: italic;
+    }
+
+    #submitbtn {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(90deg, #0e1216, #00A8FF);
+        margin: 0;
+    }
+
+    #submitbtn:hover {
+        background: linear-gradient(90deg, #69b1ff, #e8f7ff);
+    }
+
+    form {
+        animation: flipIn 1.3s ease-in-out forwards;
+    }
+
+    @keyframes flipIn {
+        0% {
+            opacity: 0;
+            transform: perspective(600px) rotateX(-90deg);
+        }
+
+        100% {
+            opacity: 1;
+            transform: perspective(600px) rotateX(0);
+        }
     }
 </style>

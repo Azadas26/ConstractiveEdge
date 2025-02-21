@@ -28,43 +28,32 @@ module.exports =
     },
     Remove_Worker_Registration: (wkid) => {
         return new promise(async (resolve, reject) => {
-            await db.get().collection(consts.workers_temp).deleteOne({ _id: objectId(wkid) }).then((info)=>
-            {
+            await db.get().collection(consts.workers_temp).deleteOne({ _id: objectId(wkid) }).then((info) => {
                 resolve(info)
             })
         })
     },
-    Do_admIn_LogIn : (info)=>
-    {
-        return new promise(async(resolve,reject)=>
-        {
-            await db.get().collection(consts.admin_base).findOne({name:info.name,password:info.password}).then((infos)=>
-            {
-                if(infos)
-                {
+    Do_admIn_LogIn: (info) => {
+        return new promise(async (resolve, reject) => {
+            await db.get().collection(consts.admin_base).findOne({ name: info.name, password: info.password }).then((infos) => {
+                if (infos) {
                     resolve(infos)
                 }
-                else
-                {
+                else {
                     resolve(false)
                 }
             })
         })
     },
-    Get_Workers_Details : ()=>
-    {
-        return new promise(async(resolve,reject)=>
-        {
+    Get_Workers_Details: () => {
+        return new promise(async (resolve, reject) => {
             var list = await db.get().collection(consts.workers_base).find().toArray()
             resolve(list)
         })
     },
-    Remove_Worker : (id)=>
-    {
-        return new promise(async(resolve,reject)=>
-        {
-            await db.get().collection(consts.workers_base).deleteOne({wkid:objectId(id)}).then((data)=>
-            {
+    Remove_Worker: (id) => {
+        return new promise(async (resolve, reject) => {
+            await db.get().collection(consts.workers_base).deleteOne({ wkid: objectId(id) }).then((data) => {
                 resolve()
             })
         })
@@ -82,29 +71,27 @@ module.exports =
             })
         })
     },
-    Get_all_activites : ()=>
-    {
-        return new promise(async(resolve,reject)=>
-        {
+    Get_all_activites: () => {
+        return new promise(async (resolve, reject) => {
             var act = await db.get().collection(consts.userandwkr).aggregate([
                 {
                     $lookup:
                     {
-                           from: consts.userbase,
-                           localField: "userId",
-                           foreignField: "_id",
-                            as: "user"
+                        from: consts.userbase,
+                        localField: "userId",
+                        foreignField: "_id",
+                        as: "user"
                     }
                 },
                 {
                     $project:
                     {
-                        workersId:1,
-                        type:1,
-                        status:1,
-                        endstatus:1,
-                        starting:1,
-                        ending:1,
+                        workersId: 1,
+                        type: 1,
+                        status: 1,
+                        endstatus: 1,
+                        starting: 1,
+                        ending: 1,
                         user:
                         {
                             $arrayElemAt: ['$user', 0]
@@ -128,7 +115,7 @@ module.exports =
                         endstatus: 1,
                         starting: 1,
                         ending: 1,
-                        user:1,
+                        user: 1,
                         worker:
                         {
                             $arrayElemAt: ['$worker', 0]
@@ -137,6 +124,40 @@ module.exports =
                 }
             ]).toArray()
             resolve(act)
+        })
+    },
+    Find_howmant_users_are_on_mt_website: () => {
+        return new promise(async (resolve, reject) => {
+            const users = await db.get().collection(consts.userbase).find().toArray();
+            resolve(users.length);
+
+        })
+    },
+    Find_howmant_worker_are_on_mt_website: () => {
+        return new promise(async (resolve, reject) => {
+            const worker = await db.get().collection(consts.workers_base).find().toArray();
+            resolve(worker.length);
+
+        })
+    },
+    Find_howmant_activity_are_on_mt_website: () => {
+        return new promise(async (resolve, reject) => {
+            const action = await db.get().collection(consts.userandwkr).find().toArray();
+            resolve(action.length);
+        })
+    },
+    Get_all_users_For_admin_dashbord: () => {
+        return new promise(async (resolve, reject) => {
+            const users = await db.get().collection(consts.userbase).find().toArray();
+            resolve(users);
+
+        })
+    },
+    Get_all_worker_For_admin_dashbord: () => {
+        return new promise(async (resolve, reject) => {
+            const users = await db.get().collection(consts.workers_base).find().toArray();
+            resolve(users);
+
         })
     }
 }

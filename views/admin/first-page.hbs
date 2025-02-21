@@ -1,0 +1,535 @@
+<div class="rootfirstpage p-5">
+    <div class="admincard p-5 mt-4">
+        <div class="adminproff pl-5">
+            <div>
+                <button id="datebtn" class="pl-3 pr-3 pt-2 pb-2">
+                    <p style=" color: #fff;"><i class="fa fa-calendar mr-2" style="font-size:20px;color:white"></i>
+                        <span id="date"></span>
+                    </p>
+                </button>
+            </div>
+            <div>
+                <p style="font-size: 22px;font-weight: 800;color: #fff;">Mr &nbsp;{{admins.displayname}}</p>
+                <p style="color: #fff;">Have a nice , <span id="day">Monday</span></p>
+            </div>
+        </div>
+        <div class="min-h-screen  p-6  gap-6 mt-5"
+            style="width: 100%; display: flex; flex-wrap: wrap;justify-content: space-between;">
+            <!-- Overview Cards -->
+
+            <!-- Charts -->
+            <div style="display: flex;gap: 60px;width: 100%;">
+                <!-- Opportunity Index -->
+                <div class="text-center p-4 shadow-md rounded-xl flex flex-col items-center"
+                    style="border-radius: 12px; box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; width: 100%;">
+                    <h3 class="text-gray-600 text-sm mb-4">Work Link Analysis</h3>
+                    <div class="w-80" style="height: 200px;">
+                        <canvas id="opportunityChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Deal Value -->
+                <div class="text-center p-4 shadow-md rounded-xl pt-5"
+                    style="border-radius: 12px; position: relative; display: flex;align-items: center; justify-content: center;flex-direction: column;box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;width: 100%;">
+                    <h3 class=" text-gray-600 text-sm mb-4" style="position: absolute;top: 26px;">Deal Value</h3>
+                    <div class="h-120" style="height: 200px;width: 100%;">
+                        <canvas id="dealValueChart"></canvas>
+                    </div>
+                </div>
+
+                <div class=" p-4 shadow-md rounded-xl"
+                    style="position: relative; display: flex;align-items: center;justify-content: center; flex-direction: column; border-radius: 12px; box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; width: 100%;">
+                    <h3 class=" text-gray-600 text-sm mb-4" style="position: absolute;top: 26px;">Monthly Growth</h3>
+                    <div class="calendar-container">
+                        <div class="calendar-header">
+                            <span class="calendar-title">MY CALENDAR</span>
+                            <select id="monthSelect" class="month-dropdown">
+                                {{#each months}}
+                                <option value="{{this.value}}" {{#if this.selected}}selected{{/if}}>{{this.name}}
+                                </option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="calendar-days">
+                            <div class="day-label">Sun</div>
+                            <div class="day-label">Mon</div>
+                            <div class="day-label">Tue</div>
+                            <div class="day-label">Wed</div>
+                            <div class="day-label">Thu</div>
+                            <div class="day-label">Fri</div>
+                            <div class="day-label">Sat</div>
+                            {{#each days}}
+                            <div class="day {{#if this.selected}}selected{{/if}}">{{this.day}}</div>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="min-h-screen  p-6  gap-6 mt-5"
+            style="width: 100%; display: flex; flex-wrap: wrap;justify-content: space-between;">
+            <!-- Overview Cards -->
+
+            <!-- Charts -->
+            <div style="display: flex;gap: 60px;width: 100%;">
+                <!-- Opportunity Index -->
+                <div class="text-center  shadow-md rounded-xl pt-5 "
+                    style="animation: flipIn 1.3s ease-in-out forwards; background-color: #4d74ea; display: flex;flex-direction: column;gap: 7px; border-radius: 12px; box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; width: 100%;position: relative;height: 350px;">
+                    <h3 class=" text-gray-600 text-sm" style=" position: absolute;top: 26px;left: 12px;">01</h3>
+
+                    <div id="userscroll" class="p-4 mb-4" style="width: 100%;">
+                        {{#each userdash}}
+                        <div class="user mt-2">
+                            <div class="user1">
+                                <div style="display: flex;align-items: center;gap: 6px;">
+                                    <img src="/design/userprof.png" style="width: 50px;height: 50px;" alt="">
+                                    <div>
+                                        <p style="margin: 0;font-size: 14px;font-weight: 800;">{{this.name}}</p>
+
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div onclick=viewmoreinfo("{{this._id}}")
+                                        style="box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset; border-radius: 100%; width: 40px;height: 40px;display: flex;align-items: center;justify-content: center;">
+                                        <p style="font-size: 35px;cursor: pointer;">&#8595;</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center mt-4" style="display: none;" id="{{this._id}}">
+                                <p style="font-size: 18px;color: black;font-weight: 800;">User List</p>
+                                <div class="mt-2"
+                                    style="display: flex;justify-content: center;flex-direction: column; width: 100%;gap: 10px;">
+                                    <p>Name : {{this.name}}</p>
+                                    <p>Email : {{this.email}}</p>
+                                    <p>Ph : +91 {{this.ph}}</p>
+                                    <p>District : {{this.district}}</p>
+                                </div>
+
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+
+
+                </div>
+
+                <div class="text-center  shadow-md rounded-xl pt-5"
+                    style="animation: flipIn 1.3s ease-in-out forwards; background-color: #fff; display: flex;flex-direction: column;align-items: center;justify-content: center; gap: 7px; border-radius: 12px; box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; width: 100%;position: relative;height: 350px;">
+                    <h3 class=" text-gray-600 text-sm" style=" position: absolute;top: 26px;left: 12px;">02</h3>
+
+                    <div id="userscroll" class="p-4"
+                        style="width: 100%;display: flex;flex-direction: column;gap: 15px;">
+                        <p style="font-weight: 800;">User Growth Rate</p>
+                        <div style="width: 100%;display: flex; align-items: center;justify-content: space-between;">
+                            <div>
+                                <img src="/design/usergraph.png" style="width: 100px; height: 100px;" alt="">
+                            </div>
+                            <div
+                                style="position: relative; display: flex;flex-direction: column;align-items: center;justify-content: center;gap: 14px;">
+                                <p style="p-0; font-size: 23px;font-weight: 800;position: absolute;top: 0;left: 0;">
+                                    {{usergrowth}}
+                                </p>
+                                <p style="margin-top: 33px; font-size: 13px;">Userdata Analysis</p>
+                                <button class="pl-2 pr-2 pb-2 pt-2"
+                                    style="background-color: rgb(255, 236, 236); border-radius: 6px; border: none; font-size: 12px;">-6%
+                                    than average</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deal Value -->
+                <div class="text-center  shadow-md rounded-xl pt-5"
+                    style="animation: flipIn 1.3s ease-in-out forwards; background-color: #4d74ea; display: flex;flex-direction: column;gap: 7px; border-radius: 12px; box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; width: 100%;position: relative;height: 350px;">
+                    <h3 class=" text-gray-600 text-sm" style=" position: absolute;top: 26px;left: 12px;">03</h3>
+
+                    <div id="userscroll" class="p-4" style="width: 100%;">
+                        {{#each workerdash}}
+                        <div class="user mt-2">
+                            <div class="user1">
+                                <div style="display: flex;align-items: center;gap: 6px;">
+                                    <img src="/design/userprof.png" style="width: 50px;height: 50px;" alt="">
+                                    <div>
+                                        <p style="margin: 0;font-size: 14px;font-weight: 800;">{{this.name}}</p>
+
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div onclick=viewmoreinfo("{{this._id}}")
+                                        style="box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset; border-radius: 100%; width: 40px;height: 40px;display: flex;align-items: center;justify-content: center;">
+                                        <p style="font-size: 35px;cursor: pointer;">&#8595;</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center mt-4" style="display: none;" id="{{this._id}}">
+                                <p style="font-size: 18px;color: black;font-weight: 800;">User List</p>
+                                <div class="mt-2"
+                                    style="display: flex;justify-content: center;flex-direction: column; width: 100%;gap: 10px;">
+                                    <p>Name : {{this.name}}</p>
+                                    <p>Email : {{this.email}}</p>
+                                    <p>Ph : +91 {{this.ph}}</p>
+                                    <p>District : {{this.district}}</p>
+                                </div>
+
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+
+
+                </div>
+
+
+
+
+
+                <div class="text-center  shadow-md rounded-xl pt-5"
+                    style="animation: flipIn 1.3s ease-in-out forwards; display: flex;flex-direction: column;align-items: center;justify-content: center; gap: 7px; border-radius: 12px; box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; width: 100%;position: relative;height: 350px;">
+                    <h3 class=" text-gray-600 text-sm" style=" position: absolute;top: 26px;left: 12px;">04</h3>
+
+                    <div id="userscroll" class="p-4"
+                        style="width: 100%;display: flex;flex-direction: column;gap: 15px;">
+                        <p style="font-weight: 800;">Worker Growth Rate</p>
+                        <div style="width: 100%;display: flex; align-items: center;justify-content: space-between;">
+                            <div>
+                                <img src="/design/workergraph.png" style="width: 100px; height: 100px;" alt="">
+                            </div>
+                            <div
+                                style="position: relative; display: flex;flex-direction: column;align-items: center;justify-content: center;gap: 14px;">
+                                <p style="p-0; font-size: 23px;font-weight: 800;position: absolute;top: 0;left: 0;">
+                                    {{workergrowth}}
+                                </p>
+                                <p style="margin-top: 33px; font-size: 13px;">Workerdata Analysis</p>
+                                <button class="pl-2 pr-2 pb-2 pt-2"
+                                    style="background-color: rgb(212, 255, 208); border-radius: 6px; border: none; font-size: 12px;">+12%
+                                    than average</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<style>
+    #userscroll {
+        overflow-y: scroll;
+    }
+
+    #userscroll::-webkit-scrollbar {
+        display: none;
+    }
+
+    .rootfirstpage {
+        width: 100%;
+        min-height: 100vh;
+        background-image: url(/design/bg_img.png);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #datebtn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        /* Adjust spacing between icon and text */
+        background-color: rgba(216, 222, 255, 0.3);
+        /* 30% transparency */
+        color: white;
+        font-size: 14px;
+        font-weight: 500;
+        padding: 6px 12px;
+        border-radius: 12px;
+        /* Makes it rounded */
+        border: none;
+        cursor: pointer;
+    }
+
+
+    .adminproff {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        border-radius: 12px;
+        width: 100%;
+        height: 250px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+        background-image: url(/design/adminbanner.png);
+        background-size: cover;
+        /* Ensures full coverage without distortion */
+        background-position: center;
+        /* Centers the image */
+        background-repeat: no-repeat;
+        /* Prevents repeating */
+    }
+
+    .admincard {
+        width: 90%;
+        height: auto;
+        box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+        border-radius: 12px;
+        
+    }
+
+    h3 {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 800;
+    }
+
+    p {
+        margin: 0;
+        padding: 0;
+        color: #1F2937;
+    }
+
+    .calendar-container {
+        width: 300px;
+        background: #f5f5f5;
+        border-radius: 10px;
+        padding: 16px;
+        font-family: Arial, sans-serif;
+    }
+
+    .calendar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #4a6ee0;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 8px;
+    }
+
+    .calendar-title {
+        font-weight: bold;
+    }
+
+    .month-dropdown {
+        background: white;
+        color: #4a6ee0;
+        border: none;
+        padding: 5px;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+
+    .calendar-days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 8px;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .day-label {
+        font-weight: bold;
+        color: #666;
+    }
+
+    .day {
+        padding: 10px;
+        border-radius: 50%;
+        transition: background-color 0.3s;
+        cursor: pointer;
+    }
+
+    .day:hover {
+        background-color: #dbe4ff;
+    }
+
+    .selected {
+        background-color: #4a6ee0;
+        color: white;
+    }
+
+    .user {
+        max-width: 380px;
+        height: auto;
+        padding: 12px;
+        background-color: #ffffff;
+        flex-shrink: 0;
+        /* Prevent shrinking */
+        border-radius: 20px;
+        box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+
+    }
+
+    .user1 {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    @keyframes flipIn {
+        0% {
+            opacity: 0;
+            transform: perspective(600px) rotateY(180deg);
+        }
+
+        100% {
+            opacity: 1;
+            transform: perspective(600px) rotateX(0);
+        }
+    }
+</style>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+    console.log("count", {{ count }})
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const ctx1 = document.getElementById('opportunityChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'doughnut',
+            data: {
+                labels: ['Users', 'Workers', 'Activities'],
+                datasets: [{
+                    data: [{{ count }}],
+                backgroundColor: ['#2f4b7c', '#4d74ea', '#bfcaff'],
+            }]
+        },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+
+    const ctx2 = document.getElementById('dealValueChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+            datasets: [{
+                label: 'Enquerry',
+                data: [150, 200, 300, 250, 270, 187],
+                backgroundColor: '#2f4b7c'
+            }, {
+                label: 'Commits',
+                data: [30, 50, 70, 60, 80, 23],
+                backgroundColor: '#4d74ea'
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+    });
+    });
+
+    document.getElementById("monthSelect").addEventListener("change", function () {
+
+    });
+
+
+
+
+    function updateDateTime() {
+        const now = new Date();
+        const options = {
+            weekday: 'short',
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        };
+
+        const dateStr = now.toLocaleDateString('en-US', options);
+        let hours = now.getHours();
+        const minutes = now.getMinutes();
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12 || 12; // Convert 0 to 12
+        const timeStr = `${hours}:${minutes.toString().padStart(2, '0')} ${ampm}`;
+
+        document.getElementById("date").innerHTML = `${dateStr} &nbsp;${timeStr}`;
+    }
+
+    // Call the function
+    updateDateTime();
+
+    const date = new Date();
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const today = days[date.getDay()];
+
+    document.getElementById('day').innerHTML = today
+
+
+    const monthSelect = document.getElementById("monthSelect");
+    const daysContainer = document.getElementById("daysContainer");
+
+    // Populate month dropdown
+    const months = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
+    months.forEach((month, index) => {
+        let option = document.createElement("option");
+        option.value = index;
+        option.textContent = month;
+        monthSelect.appendChild(option);
+    });
+
+    monthSelect.value = new Date().getMonth(); // Set current month
+
+    // Generate calendar days
+    function generateCalendar() {
+        daysContainer.innerHTML = ""; // Clear previous days
+        const selectedMonth = parseInt(monthSelect.value);
+        const year = new Date().getFullYear();
+        const firstDay = new Date(year, selectedMonth, 1).getDay();
+        const totalDays = new Date(year, selectedMonth + 1, 0).getDate();
+
+        // Empty slots before the first day
+        for (let i = 0; i < firstDay; i++) {
+            const emptyDiv = document.createElement("div");
+            daysContainer.appendChild(emptyDiv);
+        }
+
+        // Add days to calendar
+        for (let day = 1; day <= totalDays; day++) {
+            const dayDiv = document.createElement("div");
+            dayDiv.classList.add("day");
+            dayDiv.textContent = day;
+
+            // Highlight today
+            const today = new Date();
+            if (day === today.getDate() && selectedMonth === today.getMonth()) {
+                dayDiv.classList.add("selected");
+            }
+
+            daysContainer.appendChild(dayDiv);
+        }
+    }
+
+    monthSelect.addEventListener("change", generateCalendar);
+    generateCalendar();
+
+    function viewmoreinfo(id) {
+        let element = document.getElementById(id);
+
+        if (element.classList.contains("visible")) {
+            // Hide with animation
+            element.style.maxHeight = "0px";
+            setTimeout(() => {
+                element.classList.remove("visible");
+                element.style.display = "none";
+            }, 400); // Matches the transition duration
+        } else {
+            // Show with animation
+            element.style.display = "block";
+            element.style.overflow = "hidden"; // Ensures smooth transition
+            element.style.maxHeight = "0px";
+            setTimeout(() => {
+                element.classList.add("visible");
+                element.style.transition = "max-height 0.4s ease-in-out";
+                element.style.maxHeight = "500px"; // Adjust based on content size
+            }, 10);
+        }
+    }
+
+</script>

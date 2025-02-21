@@ -16,11 +16,11 @@ var verfyawklogin = (req, res, next) => {
 router.get('/', function (req, res, next) {
     if (req.session.wkuser) {
         workerdb.Check_Workers_status(req.session.wkuser.wkid).then((onoff) => {
-            res.render('./workers/first-page', { wk: true, wuser: req.session.wkuser,onoff})
+            res.render('./workers/first-page', {  wuser: req.session.wkuser,onoff})
         })
     }
     else {
-        res.render('./workers/first-page', { wk: true })
+        res.render('./workers/first-page',)
     }
 
 });
@@ -37,7 +37,7 @@ router.post('/setstatus', verfyawklogin, (req, res) => {
     }
 })
 router.get('/signup', (req, res) => {
-    res.render('./workers/signup-page', { wk: true })
+    res.render('./workers/signup-page')
 })
 router.post('/signup', (req, res) => {
     console.log(req.body);
@@ -56,11 +56,11 @@ router.post('/signup', (req, res) => {
 })
 router.get('/login', (req, res) => {
     if (req.session.wkfalse) {
-        res.render('./workers/login-page', { wk: true, err: "Incorrect Username or Password" })
+        res.render('./workers/login-page', {  err: "Incorrect Username or Password" })
         req.session.wkfalse = false
     }
     else {
-        res.render('./workers/login-page', { wk: true })
+        res.render('./workers/login-page')
     }
 
 })

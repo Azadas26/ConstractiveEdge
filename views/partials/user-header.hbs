@@ -1,56 +1,135 @@
-<nav class="navbar navbar-expand-lg navbar-light"
-    style="background: transparent; position: fixed;width: 100%;z-index: 2;">
-    <a class="navbar-brand " href="/" style="font-size: 22px;"><b>Home</b></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+<div class="roothd">
+    <div class="logo">
+        <a href="/"> <img src="/design/og-logo.png" alt="Logo" style="width: 140px;"></a>
+    </div>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
+    <!-- Hamburger Menu Icon -->
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
 
-            <li class="nav-item">
-                <a class="nav-link" style="color: black; font-weight: 800;font-size: 22px;" href="/services">Services</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="/requests" style="color: black; font-weight: 800;font-size: 22px;">Requests{{#if
-                    req}}{{/if}}<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" style="color: black; font-weight: 800;font-size: 22px;" href="/confirm">Confirmation</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" style="color: black; font-weight: 800;font-size: 22px;" href="/activties">Activities</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" style="color: black; font-weight: 800;font-size: 22px;" href="/history">History</a>
-            </li>
-        </ul>
-        <div class="dropdown ">
-            <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false"
-                style="background: transparent;color: black; border-radius: 50%;">
-                {{#if fuser}}
-                <b>{{fuser.name}}</b>
-                {{else}}
-                <b>Account</b>
-                {{/if}}
-            </button>
+    <div class="sessions" onmouseleave="hideMenu()">
+        {{#if fuser}}
+        <div class="menu-links">
+            <a class="nav-link" href="/services">Services</a>
+            <a class="nav-link" href="/requests">Requests</a>
+            <a class="nav-link" href="/confirm">Confirmation</a>
+            <a class="nav-link" href="/activties">Activities</a>
+            <a class="nav-link" href="/history">History</a>
+        </div>
+        {{/if}}
+
+        <div class="auth">
             {{#if fuser}}
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: black;">
-
-                <a class="dropdown-item text-light" href="/logout">Logout</a>
-                {{else}}
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: black;">
-                    <a class="dropdown-item text-light" href="/login">Login</a>
-                    <a class="dropdown-item text-light" href="/signup">Signup</a>
-
-                </div>
-
-
+            <div class="auth-links">
+                <a class="dropdown-item text-dark" style="font-weight: 800;" href="#">{{fuser.name}}</a>
+                <a class="dropdown-item text-dark" style="font-weight: 800;" href="#">|</a>
+                <a class="dropdown-item text-dark" style="font-weight: 800;" href="/logout">Logout</a>
+            </div>
+            {{else}}
+            <div class="auth-links">
+                <a class="dropdown-item text-dark" style="font-weight: 800;" href="/login">Login</a>
+                <a class="dropdown-item text-dark" style="font-weight: 800;" href="#">|</a>
+                <a class="dropdown-item text-dark" style="font-weight: 800;" href="/signup">Signup</a>
             </div>
             {{/if}}
-
         </div>
     </div>
-</nav>
+</div>
+
+<style>
+    /* Navbar Styling */
+    .roothd {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 10px;
+        align-items: center;
+        justify-content: space-evenly; /* ✅ Updated */
+        background: transparent;
+        z-index: 2;
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        z-index: 5;
+    }
+
+    .menu-toggle {
+        display: none;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .sessions {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        justify-content: space-evenly; /* ✅ Ensures even spacing */
+        width: 80%;
+    }
+
+    .menu-links {
+        display: flex;
+        gap: 15px;
+    }
+
+    .auth .auth-links {
+        display: flex;
+        gap: 10px;
+    }
+
+    .nav-link {
+        font-size: 15px;
+        color: rgb(73, 73, 73);
+    }
+
+    /* Responsive Design */
+    @media screen and (max-width: 768px) {
+        .sessions {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            position: absolute;
+            top: 58px;
+            left: 0;
+            background: rgba(255, 255, 255, 0.95);
+            text-align: center;
+            padding: 15px 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .sessions.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .menu-links {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .auth-links {
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .menu-toggle {
+            display: block;
+        }
+    }
+
+    a {
+        font-family: 'Poppins', sans-serif;
+    }
+</style>
+
+<script>
+    function toggleMenu() {
+        document.querySelector('.sessions').classList.toggle('active');
+    }
+
+    function hideMenu() {
+        document.querySelector('.sessions').classList.remove('active');
+    }
+</script>

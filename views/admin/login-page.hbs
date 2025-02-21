@@ -1,33 +1,31 @@
 <div id="signup" class="container-fluid">
-    <div class="row " style="">
-        <div class="col-md-12">
-            <form action="/admin/login" method="post" enctype="multipart/form-data">
-                <h1 class="text-center" style="font-weight: 800; color: rgb(38, 38, 37);"><b>Admin Login Page</b>
-                </h1>
-                <p style="color: red;">{{#if err}}
-                    {{err}}
-                    {{/if}}
-                </p>
-                <div class="form-group">
-                    <label class="" for="exampleInputEmail1">User Name</label>
-                    <input name="name" type="text" class="form-control" id="exampleInputEmail1"
-                        aria-describedby="emailHelp" placeholder="Email">
 
-                </div>
-                <div class="form-group">
-                    <label class="" for="exampleInputPassword1">Password</label>
-                    <input name="password" type="password" class="form-control" id="exampleInputPassword1"
-                        placeholder="Password">
-                </div>
-                <button type="submit" style="width: 100%; border-radius: 12px;" class="btn btn-dark">Submit</button>
-            </form>
+    <form class="p-5" action="/admin/login" method="post" enctype="multipart/form-data">
+        <h1 class="text-center" style="font-weight: 800; color: rgb(38, 38, 37);"><b>Admin login page</b>
+        </h1>
+        <p style="color: red;">{{#if err}}
+            {{err}}
+            {{/if}}
+        </p>
+        <div class="form-group">
+            <label class="" for="exampleInputEmail1">User Name</label>
+            <input name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                placeholder="Email">
+
         </div>
-    </div>
+        <div class="form-group">
+            <label class="" for="exampleInputPassword1">Password</label>
+            <input name="password" type="password" class="form-control" id="exampleInputPassword1"
+                placeholder="Password">
+        </div>
+        <button type="submit" style="width: 100%; border-radius: 12px;" class="btn btn-dark">Submit</button>
+    </form>
+
 </div>
 
 <style>
     #signup {
-        background-image: url();
+        background-image: url(/design/admi.jpg);
         background-attachment: fixed;
         background-size: cover;
         background-repeat: no-repeat;
@@ -36,5 +34,26 @@
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    form {
+        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+        border-radius: 12px;
+         animation: flipIn 1.3s ease-in-out forwards;
+         background-color: #ffff;
+         opacity: 0;
+      
+    }
+
+    @keyframes flipIn {
+        0% {
+            opacity: 0;
+            transform: perspective(600px) rotateX(-90deg);
+        }
+
+        100% {
+            opacity: 1;
+            transform: perspective(600px) rotateX(0);
+        }
     }
 </style>

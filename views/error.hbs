@@ -1,3 +1,49 @@
-<h1>{{message}}</h1>
-<h2>{{error.status}}</h2>
-<pre>{{error.stack}}</pre>
+<div id="error">
+    <div class="errorbg">
+
+        <a class="btn btn-success " style="border-radius: 12px; margin-bottom: 160px; font-family: 'Poppins', sans-serif;" id="homeLink">Go to Home</a>
+    </div>
+</div>
+
+<style>
+    #error {
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #fefefe;
+    }
+
+    .errorbg {
+        width: 160vh;
+        height: 88vh;
+        background-image: url(/design/404.gif);
+        background-position: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: end;
+       
+    }
+</style>
+
+<script>
+    let url = window.location.href;
+    let parts = url.split("/");
+    let value = parts[3];
+
+    if (value === "workers") {
+        document.getElementById("homeLink").href = `/${value}`;
+    }
+    else if (value === "admin") {
+        document.getElementById("homeLink").href = `/${value}`;
+    }
+    else {
+        document.getElementById("homeLink").href = `/`;
+    }
+
+
+
+
+</script>

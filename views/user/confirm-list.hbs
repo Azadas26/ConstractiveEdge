@@ -1,52 +1,190 @@
-<div class="container-fluid" style="background-color: #5c6263; height: 100vh;">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="container-fluid">
-                <div class="row mt-5">
-                    <div class="col-md-12 p-5">
-                        {{#if list}}
-                        <table class="table text-center text-light">
-                            <thead>
-                                <tr>
-                                    <th scope="col">No</th>
-                                    <th scope="col">Worker Profile</th>
-                                    <th scope="col">Worker Name</th>
-                                    <th scope="col">Phone Number</th>
-                                    <th scope="col">Email Address</th>
-                                    <th scope="col">Worker Type</th>
-                                    <th scope="col">Worker District</th>
-                                    <th scope="col">Mannage Request</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {{#each list}}
-                                <tr>
-                                    <td class="pt-5">{{@index}}</td>
-                                    <td class="p-5"><img src="/workersimage/{{this.workers.wkid}}.jpg"
-                                            style="width: 100px;" height="100px" alt=""></td>
-                                    <td class="pt-5">{{this.workers.name}}</td>
-                                    <td class="pt-5">{{this.workers.ph}}</td>
-                                    <td class="pt-5">{{this.workers.email}}</td>
-                                    <td class="pt-5">{{this.workers.wrktype}}</td>
-                                    <td class="pt-5">{{this.workers.district}}</td>
-                                    <td class="pt-5"><a
-                                            href="/acceptconfirm?wkid={{this.workers.wkid}}&type={{this.workers.wrktype}}"
-                                            class="btn btn-outline-success m-2">Confirm</a>
-
-                                        <a href="/removeconfirm?wkid={{this.workers.wkid}}"
-                                            class="btn btn-outline-danger m-2"
-                                            onclick="return confirm('Are you sure to remove ?')">Remove</a>
-                                    </td>
-                                </tr>
-                                {{/each}}
-                            </tbody>
-                        </table>
-                        {{else}}
-                        <h1 class="text-center text-light" style="font-weight: 800;">Confirmations Not Available</h1>
-                        {{/if}}
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="rootconfirm">
+    {{#if list}}
+    <div class="heading">
+        <p style="font-size: 36px;font-weight: 800;">Confirm </p>
+        <p id="date" style="color: rgb(72, 72, 72);"></p>
     </div>
+    <div class="table">
+        <table>
+            <thead>
+                <tr style="text-align: center;">
+                    <th scope="col">No</th>
+                    <th scope="col">Worker Profile</th>
+                    <th scope="col">Worker Name</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Email Address</th>
+                    <th scope="col">Worker Type</th>
+                    <th scope="col">Worker District</th>
+                    <th scope="col">Manage Request</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each list}}
+                <tr class="">
+                    <td>{{@index}}</td>
+                    <td>
+                        <img src="/workersimage/{{this.workers.wkid}}.jpg" alt="Worker Image">
+                    </td>
+                    <td>{{this.workers.name}}</td>
+                    <td>{{this.workers.ph}}</td>
+                    <td>{{this.workers.email}}</td>
+                    <td>{{this.workers.wrktype}}</td>
+                    <td>{{this.workers.district}}</td>
+                    <td class="manage-btns">
+                        <a href="/acceptconfirm?wkid={{this.workers.wkid}}&type={{this.workers.wrktype}}"
+                            class="btn greenbtn">&#10004;</a>
+                        <a href="/removeconfirm?wkid={{this.workers.wkid}}" class="btn redbtn"
+                            onclick="return confirm('Are you sure to remove?')">&#10006;</a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    {{else}}
+    <div id="myDiv"
+        style="width: 100%;text-align: center;display: flex;align-items: center;justify-content: center;flex-direction: column; height: auto;">
+    </div>
+    {{/if}}
 </div>
+{{#if list}}
+<style>
+    .rootconfirm {
+        width: 100%;
+        min-height: 100vh;
+        background-image: url(/design/bg_img.png);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+       
+    }
+</style>
+{{else}}
+<style>
+    .rootconfirm {
+        width: 100%;
+        min-height: 100vh;
+       background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+{{/if}}
+
+<style>
+    .heading {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: start;
+        padding-left: 40px;
+        width: 100%;
+        height: 90px;
+        margin-top: 80px;
+    }
+
+    p {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .table {
+        width: 95.5%;
+        height: 100%;
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    table {
+        width: 100%;
+        color: black;
+        height: 100%;
+        border-spacing: 12px;
+        /* Adds space between table cells */
+        border-collapse: separate;
+    }
+
+    th,
+    td {
+        padding: 15px 20px;
+        /* Ensures spacing inside table cells */
+        text-align: center;
+        background-color: white;
+        /* Keeps text readable */
+        border-radius: 12px;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px, rgba(0, 0, 0, 0.08) 0px 0px 1px;
+    }
+
+    td img {
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+    }
+
+    .manage-btns {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn {
+        color: white;
+        border-radius: 100%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        text-decoration: none;
+        box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px, rgba(27, 31, 35, 0.15) 0px 0px 1px;
+    }
+
+    .greenbtn {
+        background-color: rgb(185, 250, 185);
+        ;
+    }
+
+    .greenbtn:hover {
+        background-color: green;
+    }
+
+    .redbtn {
+        background-color: rgb(255, 198, 198);
+    }
+
+    .redbtn:hover {
+        background-color: red;
+    }
+
+    h1 {
+        font-family: 'Poppins', sans-seri;
+    }
+</style>
+
+<script>
+    document.getElementById("date").innerHTML = new Date().toDateString();
+</script>
+
+{{#if list}}
+
+{{else}}
+<script>
+    
+
+
+    let img = document.createElement("img"); // Create an image element
+    img.src = "/design/emty.gif"; // Set the image source
+    img.alt = "Description"; // Add alternative text
+    img.style.width = "900px"; // Set width (optional)
+    img.style.width = "900px";
+
+    document.getElementById("myDiv").appendChild(img); // Append to div
+
+</script>
+{{/if}}

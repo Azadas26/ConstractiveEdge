@@ -1,34 +1,162 @@
-<div class="container-fluid" style="background-color: #5c6263;">
-    <div class="row pt-5">
-        {{#if list}}
+<div class="container-fluid pt-5" style="display: flex;flex-direction: column;gap: 30px;">
+    {{#if list}}
+    <div id="roothd" class="mt-4 ">
+        <div class="heading ">
+            <p style="font-size: 36px;font-weight: 800;">Current works </p>
+            <p id="date" style="color: rgb(72, 72, 72);"></p>
+        </div>
+    </div>
+    <div class="rootcard">
         {{#each list}}
         {{#if this.status}}
-        <div class="col-md-3 p-5">
-            <div class="card m-auto" style="width: 18rem; border: solid;">
-                <div class="card-body text-center">
-                    <h5 class="card-title"><b><i>{{this.user.name}}</i></b></h5>
-                    <p class="card-text">Email : {{this.user.email}}</p>
-                    <p class="card-text">Phone : {{this.user.ph}}</p>
-                    <p class="card-text">District : {{this.user.district}}</p>
-                    <p class="card-text">Address : {{this.user.address}}</p>
-                    <p class="card-text"><b>Worke : {{this.type}}</b></p>
-                    <p class="card-text"><b>Worke Starting: {{this.starting}}</b></p>
-
-                </div>
-                <div class="text-center">
-                    <div class="m-2">
-                        <a href="https://www.google.com/maps?q={{this.late}},{{this.long}}"
-                            class="btn btn-success mb-2" style="width: 100%;">Location</a>
-                        <a href="/workers/endwrk?id={{this.user._id}}" class="btn btn-danger" style="width: 100%;">End
-                            Work</a>
-                    </div>
-                </div>
+        <div class="card p-5">
+            <div class="card-body1">
+                <h5 class="card-title m-0" style="font-size: 34px;font-weight: 800;"> {{this.user.name}}</h5>
+                <a style="font-size: 24px;font-weight: 800;"
+                    href="https://www.google.com/maps?q={{this.late}},{{this.long}}" class="text-dark m-0"><i
+                        class="fa fa-map-marker"></i></a>
+            </div>
+            <div class="cord-body2">
+                <p class="card-text">Email : {{this.user.email}}</p>
+                <p class="card-text">Phone : {{this.user.ph}}</p>
+                <p class="card-text">District : {{this.user.district}}</p>
+                <p class="card-text">Address : {{this.user.address}}</p>
+                <p class="card-text"><b>Worke : {{this.type}}</b></p>
+            </div>
+            <div class="card-body3">
+                <p class="card-text"><b>Worke Starting: {{this.starting}}</b></p>
+            </div>
+            <div class="text-center">
+                <a href="/workers/endwrk?id={{this.user._id}}"
+                    style="color: #fff;border-radius: 12px; background: linear-gradient(90deg, #007BFF, #00A8FF)"
+                    class="btn w-100">End Work</a>
             </div>
         </div>
+        <style>
+            .container-fluid {
+        width: 100%;
+        min-height: 100vh;
+        background-image: url(/design/bg_img.png);
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+        </style>
         {{/if}}
         {{/each}}
-        {{else}}
-
-        {{/if}}
     </div>
+    {{else}}
+    <div id="myDiv"
+        style="width: 100%;text-align: center;display: flex;align-items: center;justify-content: center;flex-direction: column; height: auto;">
+    </div>
+    <style>
+        .container-fluid {
+            width: 100%;
+            min-height: 100vh;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+    </style>
+    {{/if}}
 </div>
+
+<style>
+    .card-body1 {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 22rem;
+        border: none;
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+        border-radius: 12px;
+        min-height: 27rem;
+        background: transparent;
+        gap: 15px;
+        opacity: 0;
+        /* Initially hidden */
+        transform: translateY(20px);
+        transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .card.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .rootcard {
+        min-height: 70vh;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 25px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    
+
+    #roothd {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        margin-left: 40px;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    @media screen and (max-width: 768px) {
+        #roothd {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 0;
+            text-align: center;
+        }
+    }
+</style>
+
+<script>
+    document.getElementById("date").innerHTML = new Date().toDateString();
+
+    window.onload = function () {
+        setTimeout(() => {
+            document.querySelectorAll('.card').forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('show');
+                }, index * 300); // Stagger effect with 300ms delay
+            });
+        }, 500); // Delay animation start to ensure smooth rendering
+    };
+</script>
+
+
+{{#if list}}
+
+{{else}}
+<script>
+
+
+
+    let img = document.createElement("img"); // Create an image element
+    img.src = "/design/emty.gif"; // Set the image source
+    img.alt = "Description"; // Add alternative text
+    img.style.width = "900px"; // Set width (optional)
+    img.style.width = "900px";
+
+    document.getElementById("myDiv").appendChild(img); // Append to div
+
+</script>
+{{/if}}

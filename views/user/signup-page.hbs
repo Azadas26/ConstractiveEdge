@@ -1,40 +1,46 @@
-<div id="signup" class="container-fluid">
-    <div class="row ">
-        <div class="col-md-12">
-            <form action="/signup" method="post" enctype="multipart/form-data" id="usersignupform">
-                <h1 class="text-center" style="font-weight: 800; color: rgb(38, 38, 37);"><b>Create Your Account</b>
-                </h1>
-                {{#if errmsg}}
-                <p style="color: red;"><i><b>{{errmsg}}</b></i></p>
-                {{/if}}
-                <div class="form-group">
-                    <label for="exampleInputEmail1"><b>Enter Name</b></label>
-                    <input name="name" type="text" class="form-control" id="exampleInputEmail1"
-                        aria-describedby="emailHelp" placeholder="Name">
+<div class="signup-container">
+    <div class="signup-box">
+        <h2>Create Your Account</h2>
+        <p class="subtitle">Create Your Account</p>
+        {{#if errmsg}}
+        <p class="error">{{errmsg}}</p>
+        {{/if}}
 
+        <form class="mt-5" action="/signup" method="post" enctype="multipart/form-data">
+            <!-- Name & Email -->
+            <div style="display: flex; gap: 6px;">
+                <div class="input-group">
+                    <img src="/design/person_icon.svg" alt="User Icon">
+                    <input class="ml-2" name="name" type="text" placeholder="Enter Name" required>
                 </div>
-                <div class="form-group">
-                    <label class="" for="exampleInputEmail1"><b>Email address</b></label>
-                    <input name="email" type="email" class="form-control" id="exampleInputEmail1"
-                        aria-describedby="emailHelp" placeholder="Email">
 
+                <div class="input-group">
+                    <img src="/design/mail_icon.svg" alt="Mail Icon">
+                    <input class="ml-2" name="email" type="email" placeholder="Email Address" required autocomplete="off">
                 </div>
-                <div class="form-group">
-                    <label for="exampleInputEmail1"><b>Enter Phone Number</b></label>
-                    <input name="ph" type="number" class="form-control" id="exampleInputEmail1"
-                        aria-describedby="emailHelp" placeholder="+91 XXXXXX0490">
+            </div>
 
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputEmail1"><b>Enter Address With Picode</b></label>
-                    <input name="address" type="text" class="form-control" id="exampleInputEmail1"
-                        aria-describedby="emailHelp" placeholder="ABCD house,pathiyoorkala,keerikad P.O 6005XX"
-                        style="height: 100px;">
+            <!-- Password -->
+            <div class="input-group">
+                <img src="/design/lock_icon.svg" alt="Lock Icon">
+                <input class="ml-2" name="password" type="password" placeholder="Password" required>
+            </div>
 
-                </div>
-                <div class="form-group">
-                    <label class="" for="exampleInputPassword1"><b>Choose Your District</b></label>
-                    <select id="district" name="district" style="width: 100%; height: 35px; border: 0;">
+            <!-- Phone -->
+            <div class="input-group">
+                <input name="ph" type="number" placeholder="Phone Number" required>
+            </div>
+
+            <!-- Address -->
+            <div class="input-group">
+                <textarea name="address" placeholder="Enter Address with Pincode" required></textarea>
+            </div>
+
+            <!-- District Selection & Location -->
+            <div style="display: flex; gap: 8px;">
+                <div class="input-group">
+                    <select name="district" required>
+                        <option value="" disabled selected>Choose Your District</option>
                         <option value="alappuzha">Alappuzha</option>
                         <option value="ernakulam">Ernakulam</option>
                         <option value="idukki">Idukki</option>
@@ -51,43 +57,181 @@
                         <option value="wayanad">Wayanad</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label class="" for="exampleInputPassword1"><b>Password</b></label>
-                    <input name="password" type="password" class="form-control" id="exampleInputPassword1"
-                        placeholder="Password">
+
+                <div class="location-group">
+                    <button type="button" onclick="getUserLocation()">Get Location</button>
+                    <input name="late" type="text" id="late" hidden>
+                    <input name="long" type="text" id="long" hidden>
                 </div>
-                <div>
-                    <button type="button" name="location" class="form-control ml-2" id="location"
-                        aria-describedby="emailHelp" style="width: 35%;" onclick="getUserLocation()">Location</button>
-                    <input name="late" type="text" style="display: none;" id="late">
-                    <input name="long" type="text" style="display: none;" id="long">
-                </div>
-                <div class="form-group" style="text-align: right;">
-                    <a href="/login" class="text-dark"><b>Alredy Have An Account ?</b></a>
-                </div>
-                <button type="submit" style="width: 100%; border-radius: 12px;" class="btn btn-dark">Submit</button>
-            </form>
-        </div>
+            </div>
+
+            <!-- Already Have an Account -->
+            <p class="signup-link">Already have an account? <a href="/login">Login</a></p>
+
+            <!-- Submit -->
+            <button type="submit">Submit</button>
+        </form>
     </div>
 </div>
 
+<!-- CSS -->
 <style>
-    #signup {
-        background-image: url(/images/pexels-aleksandar-pasaric-1437493.jpg);
-        background-attachment: fixed;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        height: 100vh;
+    /* Background */
+    .signup-container {
         display: flex;
         align-items: center;
         justify-content: center;
+        min-height: 100vh;
+        background: linear-gradient(to bottom right, #bfdbfe, #c084fc);
+        padding: 20px;
+    }
+
+    /* Signup Box */
+    .signup-box {
+        width: 100%;
+        max-width: 400px;
+        background: #0f172a;
+        color: #a5b4fc;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        text-align: center;
+          animation: flipIn 1.3s ease-in-out forwards;
+    }
+
+    /* Headings */
+    h2 {
+        font-size: 24px;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    /* Error Message */
+    .error {
+        color: red;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    /* Input Group */
+    .input-group {
+        display: flex;
+        align-items: center;
+        background-color: #1e293b;
+        padding: 12px;
+        border-radius: 20px;
+        margin-bottom: 15px;
+        flex: 1;
+    }
+
+    .input-group input,
+    .input-group textarea,
+    .input-group select {
+        flex: 1;
+        background: transparent !important;
+        border: none;
+        outline: none;
+        color: #a5b4fc;
+        font-size: 14px;
+        padding: 5px;
+        min-width: 0;
+        appearance: none;
+    }
+
+    /* Email Fix */
+    .input-group input[name="email"] {
+        width: 50%;
+        position: relative;
+        z-index: 10;
+    }
+     .input-group input[name="name"] {
+        width: 50%;
+        position: relative;
+        z-index: 10;
+    }
+
+    /* Placeholder */
+    .input-group input::placeholder,
+    .input-group textarea::placeholder {
+        color: #a5b4fc;
+        opacity: 0.7;
+    }
+
+    /* Dropdown */
+    .input-group select {
+        background: transparent;
+        border: none;
+        color: #a5b4fc;
+        font-size: 14px;
+    }
+
+    /* Location Button */
+    .location-group {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 15px;
+    }
+
+    .location-group button {
+        padding: 8px 15px;
+        border: none;
+        background: #6366f1;
+        color: white;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+
+    /* Signup Link */
+    .signup-link {
+        margin-top: 15px;
+        font-size: 14px;
+    }
+
+    .signup-link a {
+        color: #a5b4fc;
+        font-weight: bold;
+    }
+
+    /* Submit Button */
+    button {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 20px;
+        background: linear-gradient(to bottom right, #6366f1, #312e81);
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    /* Autofill Fix */
+    .input-group input:-webkit-autofill,
+    .input-group input:-webkit-autofill:hover,
+    .input-group input:-webkit-autofill:focus,
+    .input-group input:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0px 1000px #1e293b inset !important;
+        -webkit-text-fill-color: #a5b4fc !important;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+    
+
+    @keyframes flipIn {
+        0% {
+            opacity: 0;
+            transform: perspective(600px) rotateX(-90deg);
+        }
+
+        100% {
+            opacity: 1;
+            transform: perspective(600px) rotateX(0);
+        }
     }
 </style>
 
+<!-- Location Script -->
 <script>
     function getUserLocation() {
-
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition);
         } else {
@@ -96,14 +240,7 @@
     }
 
     function showPosition(position) {
-        console.log("Called")
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-        document.getElementById("late").value = "" + latitude
-        document.getElementById("long").value = "" + longitude
-
-        // You can use the obtained coordinates to open a map or perform navigation
-        // For example, opening Google Maps
-        // window.open(`https://www.google.com/maps?q=${latitude},${longitude}`, "_blank");
+        document.getElementById("late").value = position.coords.latitude;
+        document.getElementById("long").value = position.coords.longitude;
     }
 </script>

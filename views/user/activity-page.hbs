@@ -1,59 +1,330 @@
-<div class="container-fluid" style="background-color: #5c6263;">
-    <div class="row pt-5">
+<div class="rootconfirm">
+    <div class="heading">
+        <p id="title" style="font-size: 36px;font-weight: 800;">Worker Activities </p>
+        <p id="date" style="color: rgb(72, 72, 72);"></p>
+    </div>
+    <div class="cards">
         {{#if list}}
         {{#each list}}
         {{#if this.status}}
-        <div class="col-md-3 p-5">
-            {{#if this.status}}
-            <div class="card m-auto" style="width: auto; border: solid;">
-                <img class="card-img-top p-3" src="/workersimage/{{this.workers.wkid}}.jpg" alt="Card image cap"
-                    style="height: 400px;">
-                <div class="card-body text-center">
-                    <h5 class="card-title">{{this.workers.wrktype}}</h5>
-                    <p class="card-text">Name : {{this.workers.name}}</p>
-                    <p class="card-text">Email : {{this.workers.email}}</p>
-                    <p class="card-text">Phone : {{this.workers.ph}}</p>
-                    <p class="card-text">District : {{this.workers.district}}</p>
-                    <p class="card-text">Work Starting : {{this.starting}}</p>
-                </div>
-                <div class=" text-center">
-                    <form action="/feedback?wkid={{this.workers.wkid}}" method="post" enctype="multipart/form-data">
-                        <div class="p-3">
-                            <label for="">Write Your Feedback About This Worker :</label>
-                            <input type="text" name="feedback" placeholder="Feedback !"
-                                style="height: 60px; width: 100%;">
-                        </div>
-                        <div class=" p-3">
-                            <label for="">Give Rating :</label>
-                            <select id="district" name="star" class="text-center"
-                                style="width: 100%; height: 35px; border: 1;">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
-                        </div>
-                        <div class="">
-                            <label for="">Upload Work Images :</label>
-                            <input type="file" class="p-3" name="img1" style="width: 100%;">
-                            <input type="file" class="p-3" name="img2" style="width: 100%;">
-                            <input type="file" class="p-3" name="img3" style="width: 100%;">
-                        </div>
-                        <div class="p-3">
-                            <input class="btn btn-success" style="width: 100%;" type="submit" value="Submit">
-                        </div>
-                    </form>
-                </div>
+        <div class="ccard">
+            <div class="profile" style=" display: flex;justify-content: space-between;">
+                <img src="/workersimage/{{this.workers.wkid}}.jpg" alt="" style="width: 100%;height: 170px;">
             </div>
-            {{else}}
+            <div class="workerinfo">
+                <p style="font-size: 20px;font-weight: 600;">Worker <i>{{this.workers.name}}</i> Detailed Information
+                </p>
+                <div class="mt-2"
+                    style="font-size:13px; width: 100%;display: flex;align-items: center;justify-content: space-evenly;">
+                    <p>{{this.workers.wrktype}}</p>
+                    <p>{{this.workers.email}}</p>
+                </div>
+                <div
+                    style="font-size:13px;width: 100%;display: flex;align-items: center;justify-content: space-evenly;">
+                    <p>+91 {{this.workers.ph}}</p>
+                    <p>{{this.workers.district}}</p>
+                </div>
+                <p style="font-size:13px;">{{this.starting}}</p>
 
-            {{/if}}
+            </div>
+
+            <div class="custom-line"></div>
+            <form id="feedbackform" action="/feedback?wkid={{this.workers.wkid}}" method="post"
+                enctype="multipart/form-data">
+                <div class="feedback">
+                    <label for="">Feedback &nbsp; & &nbsp; Rating</label>
+                    <div style="width: 100%;display: flex;  gap: 5px;">
+                        <textarea name="feedback" style="height: 40px;width: 70%;text-align: center;padding-top: 5px;"
+                            placeholder="your feedback"></textarea>
+
+                        <select id="district" name="star" class="text-center custom-select">
+                            <option value="5">5</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="custom-line"></div>
+                <div class="imagefeedbaack">
+                    <label style="margin: 0;" for="file-upload" class="custom-file-upload">Upload File</label>
+                    <div id="uploadimage"
+                        style="width: 100%; display: flex;justify-content: space-between;align-items: center; gap: 10px;">
+                        <input style="width: 200px;" class="file-upload" name="img1" type="file">
+                        <span class="moving-arrow">&#8594;</span>
+                        <input style="width: 240px;" class="file-upload" name="img2" type="file">
+                        <input style="width: 230px;" class="file-upload" name="img3" type="file">
+                    </div>
+                </div>
+                <div class="subbmit">
+                    <input id="feedbacksubmission" class="btn" type="submit" value="submit">
+                </div>
+            </form>
         </div>
         {{/if}}
         {{/each}}
         {{else}}
-            <h1 class="mt-5">No Activies Found</h1>
+        <div id="myDiv" style="width: 100%;text-align: center;display: flex;align-items: center;justify-content: center;"></div>
         {{/if}}
     </div>
 </div>
+
+<style>
+    #feedbacksubmission {
+        width: 100%;
+        height: 40px;
+        font-family: 'Poppins', sans-serif;
+        border-radius: 50px;
+        border: none;
+        background: linear-gradient(90deg, #007BFF, #00A8FF);
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .subbmit {
+        width: 100%;
+    }
+
+    .moving-arrow {
+        font-size: 30px;
+        margin: 0;
+        margin-bottom: 9px;
+        display: inline-block;
+        position: relative;
+        animation: shakeArrow 0.5s infinite alternate ease-in-out;
+    }
+
+    .imagefeedbaack {
+        width: 100%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        overflow-y: hidden;
+    }
+
+    .imagefeedbaack::-webkit-scrollbar {
+        display: none;
+    }
+
+    .feedback {
+        width: 100%;
+        text-align: center;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .workerinfo {
+        width: 100%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    img {
+        border-radius: 12px;
+    }
+
+    .index {
+        font-size: 40px;
+        font-weight: 800;
+    }
+
+    label {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    p {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+    }
+
+    .rootconfirm {
+        width: 100%;
+        min-height: 100vh;
+        background-image: url(/design/bg_img.png);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .heading {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: start;
+        padding-left: 40px;
+        width: 100%;
+        height: 90px;
+        margin-top: 80px;
+    }
+
+    p {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    #feedbackform {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 0;
+    }
+
+
+    .cards {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 30px;
+        padding: 20px;
+        padding-top: 25px;
+    }
+
+    .ccard {
+        width: 20rem;
+        height: auto;
+        border-radius: 25px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        /* Initially Hidden */
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 2s ease, transform 4s ease;
+    }
+
+    .custom-select {
+        width: 30%;
+        height: 40px;
+        border: 1px solid #007BFF;
+        /* Primary color border */
+        border-radius: 5px;
+        /* Smooth corners */
+        background-color: #f8f9fa;
+        /* Light background */
+        color: #007BFF;
+        /* Primary color text */
+        font-weight: 600;
+        text-align: center;
+        cursor: pointer;
+        appearance: none;
+        /* Remove default browser styling */
+        padding: 5px 10px;
+        transition: 0.3s ease-in-out;
+    }
+
+    .custom-select:hover {
+        background-color: #ffffff;
+        /* Primary color on hover */
+        color: black;
+        /* White text on hover */
+    }
+
+    .custom-select:focus {
+        outline: none;
+        border-color: #0056b3;
+        /* Darker blue focus border */
+        box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+    }
+
+    /* Show animation class */
+    .ccard.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .custom-line {
+        width: 100%;
+        height: 2px;
+        /* Thickness of the line */
+        background-color: rgb(211, 211, 211);
+        /* Line color */
+        margin: 10px 0;
+        /* Space around the line */
+    }
+
+    @media screen and (max-width: 768px) {
+        .heading {
+            align-items: center;
+            text-align: center;
+            padding-left: 0;
+            margin-top: 107px;
+        }
+
+        #title {
+            font-size: 24px !important;
+        }
+
+        #date {
+            font-size: 11px !important;
+        }
+
+    }
+
+    @keyframes shakeArrow {
+        0% {
+            transform: translateX(5px);
+            /* Slight move to right */
+        }
+
+        100% {
+            transform: translateX(-5px);
+            /* Slight move to left */
+        }
+    }
+</style>
+
+{{#if list}}
+
+{{else}}
+<script>
+
+    let img = document.createElement("img"); // Create an image element
+    img.src = "/design/notfound.gif"; // Set the image source
+    img.alt = "Description"; // Add alternative text
+    img.style.width = "600px"; // Set width (optional)
+    img.style.width = "600px";
+
+    document.getElementById("myDiv").appendChild(img); // Append to div
+
+    let h1 = document.createElement("h1"); // Create h1 element
+    h1.textContent = "Silence lingers, no activity found"; // Add text
+    h1.style.fontFamily = "'Poppins', sans-serif"
+    h1.style.fontWeight = "800"
+    h1.style.color = "#1F2937"
+    h1.style.position="absolute"
+     h1.style.top="24vh"
+    document.getElementById("myDiv").appendChild(h1); // Append to div
+
+</script>
+{{/if}}
+<script>
+
+
+    document.getElementById("date").innerHTML = new Date().toDateString();
+
+    // Show cards one by one on page load
+    window.onload = function () {
+        const cards = document.querySelectorAll('.ccard');
+        cards.forEach((card, index) => {
+            setTimeout(() => {
+                card.classList.add('show');
+            }, index * 300); // Delay each card by 300ms
+        });
+    };
+
+</script>

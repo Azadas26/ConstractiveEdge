@@ -1,43 +1,184 @@
-<div id="signup" class="container-fluid">
-    <div class="row " style="">
-        <div class="col-md-12">
-            <form action="/login" method="post" enctype="multipart/form-data">
-                <h1 class="text-center" style="font-weight: 800; color: rgb(38, 38, 37);"><b>Switch To Your Account</b>
-                </h1>
-                <p style="color: red;">{{#if err}}
-                    {{err}}
-                    {{/if}}
-                </p>
-                <div class="form-group">
-                    <label class="" for="exampleInputEmail1">Email address</label>
-                    <input name="email" type="email" class="form-control" id="exampleInputEmail1"
-                        aria-describedby="emailHelp" placeholder="Email">
+<div class="login-container">
+    <div class="login-box">
+        <h2>Login</h2>
+        <p class="subtitle">Login to your account!</p>
 
-                </div>
-                <div class="form-group">
-                    <label class="" for="exampleInputPassword1">Password</label>
-                    <input name="password" type="password" class="form-control" id="exampleInputPassword1"
-                        placeholder="Password">
-                </div>
-                <div class="form-group" style="text-align: right;">
-                    <a href="/signup" class="text-dark">Create Your Account...</a>
-                </div>
-                <button type="submit" style="width: 100%; border-radius: 12px;" class="btn btn-dark">Submit</button>
-            </form>
-        </div>
+        {{#if err}}
+        <p class="error">{{err}}</p>
+        {{/if}}
+
+        <form action="/login" method="post">
+            <!-- Email Input -->
+            <div class="input-group">
+                <img src="/design/mail_icon.svg" alt="Email Icon">
+                <input name="email" type="email" placeholder="Email id" required>
+            </div>
+
+            <!-- Password Input -->
+            <div class="input-group">
+                <img src="/design/lock_icon.svg" alt="Lock Icon">
+                <input name="password" type="password" placeholder="Password" style="background: transparent;" required>
+            </div>
+
+            <!-- Forgot Password -->
+            <div class="forgot-password">
+                <a href="#">Forgot password</a>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit">Login</button>
+
+            <!-- Signup Link -->
+            <p class="signup-link mt-4">Don't have an account? <a href="/signup">Sign up</a></p>
+        </form>
     </div>
 </div>
 
+<!-- CSS inside the style tag -->
 <style>
-    #signup {
-        background-image: url(/images/pexels-aleksandar-pasaric-1437493.jpg);
-        background-attachment: fixed;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        height: 100vh;
+    /* Background Gradient */
+    .login-container {
         display: flex;
         align-items: center;
         justify-content: center;
+        min-height: 100vh;
+        background: linear-gradient(to bottom right, #bfdbfe, #c084fc);
+        padding: 20px;
     }
+
+    /* Login Box */
+    .login-box {
+        width: 100%;
+        max-width: 400px;
+        background: #0f172a;
+        color: #a5b4fc;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        animation: flipIn 1.3s ease-in-out forwards;
+    }
+
+    /* Headings */
+    h2 {
+        font-size: 24px;
+        font-weight: bold;
+        color: #fff;
+    }
+    
+    .subtitle {
+        color: #a5b4fc;
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    /* Error Message */
+    .error {
+        color: red;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    /* Input Group */
+    .input-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background-color: #1e293b;
+        padding: 12px;
+        border-radius: 20px;
+        margin-bottom: 15px;
+    }
+
+    .input-group img {
+        width: 18px;
+    }
+
+    /* ✅ Fix White Input Background */
+    .input-group input {
+        flex: 1;
+        background: transparent !important; /* Ensure transparency */
+        border: none;
+        outline: none;
+        color: #a5b4fc;
+        font-size: 14px;
+        padding: 1px;
+        appearance: none; /* Remove browser default */
+    }
+
+    /* Placeholder Color */
+    .input-group input::placeholder {
+        color: #a5b4fc;
+        opacity: 0.7;
+    }
+
+    /* Forgot Password */
+    .forgot-password {
+        text-align: right;
+        margin-bottom: 15px;
+    }
+
+    .forgot-password a {
+        color: #6366f1; 
+        font-size: 14px;
+        text-decoration: none;
+    }
+
+    /* Button */
+    button {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 20px;
+        background: linear-gradient(to bottom right, #6366f1,#312e81);
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    
+
+    /* Signup Link */
+    .signup-link {
+        margin-top: 15px;
+        font-size: 14px;
+    }
+
+    .signup-link a {
+        color: #a5b4fc;
+        font-weight: bold;
+    }
+    /* ✅ Force input background to be transparent even when autofilled */
+.input-group input {
+    background: transparent !important;
+    border: none;
+    outline: none;
+    color: #a5b4fc;
+    font-size: 14px;
+    padding: 1px;
+    appearance: none;
+}
+
+/* ✅ Override autofill styles */
+.input-group input:-webkit-autofill,
+.input-group input:-webkit-autofill:hover,
+.input-group input:-webkit-autofill:focus,
+.input-group input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px #1e293b inset !important;
+    -webkit-text-fill-color: #a5b4fc !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+ @keyframes flipIn {
+        0% {
+            opacity: 0;
+            transform: perspective(600px) rotateX(-90deg);
+        }
+
+        100% {
+            opacity: 1;
+            transform: perspective(600px) rotateX(0);
+        }
+    }
+
 </style>

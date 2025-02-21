@@ -7,17 +7,31 @@ var verifyAdminLogin = (req, res, next) => {
     next()
   }
   else {
-    res.redirect('/admin/')
+    res.redirect('/admin/login')
   }
 }
+router.get('/', verifyAdminLogin, async (req, res) => {
+  const counts = [];
+  const usercount = await admindb.Find_howmant_users_are_on_mt_website()
+  counts.push(usercount)
+  const workercount = await admindb.Find_howmant_worker_are_on_mt_website()
+  counts.push(workercount)
+  const actioncount = await admindb.Find_howmant_activity_are_on_mt_website()
+  counts.push(actioncount)
+ 
+  const users = await admindb.Get_all_users_For_admin_dashbord();
+ const worker = await admindb. Get_all_worker_For_admin_dashbord()
+
+  res.render('./admin/first-page', {usergrowth:usercount,workergrowth:workercount, admin: true, admins: req.session.admin,count:counts,userdash:users,workerdash:worker })
+})
 /* GET users listing. */
-router.get('/', function (req, res, next) {
+router.get('/login', function (req, res, next) {
   if (req.session.adminfalse) {
-    res.render('./admin/login-page', { admin: true, err: "Incorrect Username Or Password" })
+    res.render('./admin/login-page', { err: "Incorrect Username Or Password" })
     req.session.adminfalse = false
   }
   else {
-    res.render('./admin/login-page', { admin: true })
+    res.render('./admin/login-page')
   }
 
 });
@@ -48,17 +62,18 @@ router.post('/login', (req, res) => {
       console.log("info = ", info);
       req.session.admin = info
       req.session.admin.adminstatus = true
-      res.redirect('/admin/accept')
+
+      res.redirect('/admin/')
     }
     else {
       req.session.adminfalse = true
-      res.redirect('/admin/')
+      res.redirect('/admin/login')
     }
   })
 })
 router.get('/logout', (req, res) => {
   req.session.admin = null
-  res.redirect('/admin/')
+  res.redirect('/admin/login')
 })
 router.get('/workers', verifyAdminLogin, (req, res) => {
   admindb.Get_Workers_Details().then((list) => {
@@ -77,18 +92,15 @@ router.get('/users', verifyAdminLogin, (req, res) => {
     res.render('./admin/users-list', { admin: true, admins: req.session.admin, list })
   })
 })
-router.get('/userremove',verifyAdminLogin,(req,res)=>
-{
+router.get('/userremove', verifyAdminLogin, (req, res) => {
   admindb.Remove_Users(req.query.id).then(() => {
     res.redirect('/admin/users')
   })
 })
-router.get('/activity',verifyAdminLogin,(req,res)=>
-{
-  admindb.Get_all_activites().then((act)=>
-  {
+router.get('/activity', verifyAdminLogin, (req, res) => {
+  admindb.Get_all_activites().then((act) => {
     console.log(act);
-    res.render('./admin/activity-page', { admin: true, admins: req.session.admin, list :act})
+    res.render('./admin/activity-page', { admin: true, admins: req.session.admin, list: act })
   })
 })
 

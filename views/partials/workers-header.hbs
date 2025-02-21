@@ -1,52 +1,175 @@
-<nav class="navbar navbar-expand-lg navbar-light"
-    style="background: transparent; position: fixed;width: 100%;z-index: 2;">
-    <a class="navbar-brand text-dark" href="/workers" style="font-size: 22px;"><b>Home</b></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+<div class="roothd">
+    <div class="logo">
+        <a href="/workers"> <img src="/design/og-logo.png" alt="Logo" style="width: 140px;"></a>
+    </div>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link text-dark" href="/workers/confirm" style="font-size: 22px;"><b>Confirm</b></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark" href="/workers/workes" style="font-size: 22px;"><b>Workes</b></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark" href="/workers/update" style="font-size: 22px;"><b>Update</b></a>
-            </li>
-        </ul>
-        <div class="dropdown ">
-            {{#if wuser}}<a href="/workers#onoff" style="text-decoration: none;" class="my-sm-0 mr-3 text-dark">{{#if
-                onoff}}<b><span class="m-1 text-light"
-                        style="font-size: 10px;">&#128994;</span>Online</b>{{else}}<b><span class="m-1"
-                        style="font-size: 10px;">&#128308;</span>Ofline</b>{{/if}}</a>{{/if}}
-            <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false"
-                style="background: transparent;color: black; border-radius: 50%;">
-                {{#if wuser}}
-                <b class="text-dark">{{wuser.name}}</b>
-                {{else}}
-                <b class="text-dark">Account</b>
-                {{/if}}
-            </button>
+    <!-- Hamburger Menu Icon -->
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+    <div class="sessions" onmouseleave="hideMenu()">
+        {{#if wuser}}
+        <div style="display: flex;gap: 15px;">
+            <a class="nav-link" href="/workers">Home</a>
+            <a class="nav-link" href="/workers/confirm">Confirm<span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/workers/workes">Works</a>
+            <a class="nav-link" href="/workers/update">Updates</a>
+        </div>
+        {{/if}}
+        <div class="auth">
             {{#if wuser}}
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: black;">
-
-                <a class="dropdown-item text-light" href="/workers/logout">Logout</a>
-                {{else}}
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: black;">
-                    <a class="dropdown-item text-light" href="/workers/login">Login</a>
-                    <a class="dropdown-item text-light" href="/workers/signup">Signup</a>
-
-                </div>
-
-
+            <div class="auth-links">
+                <a class="dropdown-item text-dark" style="font-weight: 800;" href="#">{{wuser.name}}</a>
+                <a class="dropdown-item text-dark" style="font-weight: 800;" href="#">|</a>
+                <a class="dropdown-item text-dark" style="font-weight: 800;" href="/workers/logout">Logout</a>
+            </div>
+            {{else}}
+            <div class="auth-links">
+                <a class="dropdown-item text-dark" style="font-weight: 800;" href="/workers/login">Login</a>
+                <a class="dropdown-item text-dark" style="font-weight: 800;" href="#">|</a>
+                <a class="dropdown-item text-dark" style="font-weight: 800;" href="/workers/signup">Signup</a>
             </div>
             {{/if}}
-
+            <div class="status">
+                {{#if wuser}}
+                {{#if onoff}}
+                <p id="online"><a style="text-decoration: none;color: black;" href="/workers">online</a></p>
+                {{else}}
+                <p id="offline"><a style="text-decoration: none;color: black;" href="/workers">offline</a></p>
+                {{/if}}
+                {{/if}}
+            </div>
         </div>
     </div>
-</nav>
+
+
+</div>
+
+{{#if wuser}}
+<style>
+    .sessions {
+        width: 60%;
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        justify-content: space-between;
+       
+    }
+</style>
+{{else}}
+
+    <style>.sessions {
+
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        justify-content: end;
+      
+    }
+</style>
+
+{{/if}}
+
+<style>
+    /* Status Styling */
+    #online {
+        text-shadow: 0 2px 0 rgba(132, 255, 94, 0.4);
+    }
+
+    #offline {
+        text-shadow: 0 2px 0 rgba(255, 120, 120, 0.4);
+    }
+
+    #online,
+    #offline {
+        font-family: 'Poppins', sans-serif;
+        font-size: 18px;
+        margin: 0;
+        font-weight: 800;
+    }
+
+    .status {
+        width: 20%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Navbar Styling */
+    .roothd {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 10px;
+        align-items: center;
+        justify-content: space-around;
+        background: transparent;
+        z-index: 2;
+        position: fixed;
+        width: 100%;
+        text-align: center;
+    }
+
+    .menu-toggle {
+        display: none;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .auth {
+        display: flex;
+        width: 500px;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .auth .auth-links {
+        display: flex;
+        gap: 10px;
+    }
+
+    .nav-link {
+        font-size: 15px;
+        color: rgb(73, 73, 73);
+    }
+
+    /* Responsive Menu */
+    @media screen and (max-width: 768px) {
+        .sessions {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            background: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            padding: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            /* Smooth transition */
+        }
+
+        .sessions.active {
+            display: flex;
+        }
+
+        .menu-toggle {
+            display: block;
+        }
+    }
+
+    a {
+        font-family: 'Poppins', sans-serif;
+    }
+</style>
+
+<script>
+    function toggleMenu() {
+        const menu = document.querySelector('.sessions');
+        menu.classList.toggle('active');  // Toggle only 'active' class
+    }
+
+    function hideMenu() {
+        document.querySelector('.sessions').classList.remove('active'); // Hide when mouse leaves
+    }
+</script>

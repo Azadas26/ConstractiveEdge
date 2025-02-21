@@ -1,112 +1,240 @@
-<div class="container-fluid" id="worker">
-    <div class="row pt-5" style="width: 100%;">
-        <div class="col-md-11 pt-5 text-center" style="width: 100%;">
-            <div class="pt-4" style="width: 100%;">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+<div id="one" style=" ">
+    <div class="mt-2"
+        style="width: 100%; position: absolute;top: 0; display: flex;align-items: center;justify-content: space-between;">
+        <img src="/design/og-logo.png" class="ml-5" alt="Logo" style="width: 160px;">
+        {{#if wuser}}
+        <div class=" mr-5">
+            {{#if wuser}}
+            {{#if onoff}}
+            <div class="pt-2"
+                style=" height: auto;margin: 0; display: flex;justify-content: center;align-items: center; gap: 19px;">
+                <label class="switch">
+                    <input type="checkbox" checked onchange="toggleChange(true)">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            {{else}}
+            <div style="height: auto;margin: 0; display: flex;justify-content: center;align-items: center; gap: 14px;">
+                <p class="moving-arrow mb-2 " style="margin: 0;">&#8594;</p>
+                <label class="switch">
+                    <input type="checkbox" onchange="toggleChange(false)">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            {{/if}}
+            <form id="statusForm" action="/workers/setstatus" method="post" enctype="multipart/form-data"
+                style="display: none;">
 
-                <h1 style="font-size: 50px;text-shadow: 3px 3px #131313; "><b><span
-                            style="color: rgb(1, 1, 1);">CONSTRUCTIVE EDGE</b> </span>
+                <label><input type="radio" name="status" value="true"> I Am Available</label><br>
+                <label><input type="radio" name="status" value="false"> I Am Not Available</label><br>
+
+                <input type="submit" value="Submit">
+            </form>
+            {{/if}}
+            <div id="logoutdiv" onmouseover="this.style.backgroundColor='#ddd';"
+                onmouseout="this.style.backgroundColor='transparent';" class="p-1 pl-3 pr-3"
+                style="display: none; border: 1px solid black; position: absolute;top: 74px;right: 6px; background-color: #ffff;border-radius: 12px;">
+                <a href="/workers/logout"
+                    style="text-decoration: none;color: black;font-family: 'Poppins', sans-serif;">Logout</a>
+            </div>
+        </div>
+
+        {{else}}
+        <a href="/workers/login" class='mr-5 pl-3 pr-3 pt-1 pb-1'
+            style="text-decoration: none; border: 1px solid black;  display: flex;align-items: center;justify-content: center;gap: 5px; color: black; border-radius: 12px;">
+            Login
+            <img src='/design/arrow_icon.svg' alt="Arrow" className='w-4 h-4' />
+        </a>
+        {{/if}}
+    </div>
+    <div class="d-flex flex-column align-items-center justify-content-center"
+        style="font-family: 'Poppins', sans-serif; min-height: 100vh;margin-top: 45px;">
+        <div id="imganddiv" class="d-flex  align-items-center  justify-content-center text-center text-dark">
+            <img src="/design/adminavatar.png" class="rounded-circle mb-4" style="width: 27rem; height: 37rem;" alt="">
+            <div class="text-center pl-3"
+                style="display: flex;flex-direction: column;align-items: center;justify-content: center;gap: 16px;">
+                {{!-- <h1
+                    style="font-size: 33px; color: #1F2937; font-weight: 600;   font-family: 'Poppins', sans-serif;"
+                    class=" d-flex align-items-center gap-2 h4 fw-medium mb-2">
+                    Hey {{#if wuser}}{{wuser.name}}{{else}}Worker{{/if}}
+                    <img class="ml-2" src="/design/hand_wave.png" alt="" style="width: 2rem; height: 2rem;">
+                </h1> --}}
+                <h1 style="font-size: 33px; color: #1F2937; font-weight: 600;   font-family: 'Poppins', sans-serif;"
+                    class=" d-flex align-items-center gap-2 h4 fw-medium mb-2">
+                    Hey {{#if wuser}}{{wuser.name}}{{else}}There{{/if}}
+                    <img class="ml-2" src="/design/hand_wave.png" alt="" style="width: 2rem; height: 2rem;">
                 </h1>
-
-            </div>
-            <div class="text-center p-5" style="width: 100%; text-align: center;">
-                <p class=" text-dark" style="font-size: 25px; font-weight: 800;">" Are you a motivated individual with a
-                    thirst for
-                    challenges and a hunger for success? We're on the lookout for talented
-                    professionals to join our dynamic team. If you're ready to make a meaningful impact, we invite you
-                    to explore exciting
-                    career opportunities with us. Here, you'll have the chance to collaborate with brilliant minds,
-                    shape the future, and be
-                    a part of something extraordinary. Your skills and dedication will be valued, and your career will
-                    thrive in our
-                    innovative and supportive environment. Join us today and let's transform ideas into reality, one
-                    achievement at a time.
-                    Elevate your career with us and seize the opportunity to grow, learn, and excel. Don't wait; your
-                    future begins here! "
-                </p>
-                <div style="width: 100%;" class="text-center">
-                    <a href="/workers/update" class="btn btn-dark" style="font-weight: 800;"><b>Update Your
-                            Profile</b></a>
-                </div>
-
-            </div>
-
-        </div>
-        <div class="col-md-1" style="width: 100%;">
-            <div class="text-right">
-                <a href="/workers#wfooter">
-                    <img src="/works/logo.jpg" alt="Logo" style="width: 150px; height: 138px;border-radius: 100%;"
-                        class="mt-3">
-                </a>
-            </div>
-        </div>
-        <div class="col-md-12 pb-5">
-            <div id="onoff" style="background: transparent; border-radius: 20px;" class="text-center" id="status">
-                <form action="/workers/setstatus" method="post" enctype="multipart/form-data" class="text-dark"
-                    style="font-size: 28px;font-weight: 800;">
-                    <p style="font-size: 20px;"><i>"If You Need Work Request From Users You Must Be In Online Mode"</i>
+                <h2 class="h2 fw-semibold m-0 "
+                    style="font-size: 43px; color: #1F2937; font-weight: 800;    font-family: 'Poppins', sans-serif;">
+                    welcome
+                    to
+                    workers platform</h2>
+                <div style="width: 100%; display: flex;align-items: center;justify-content: center;">
+                    <p id="des" class="m-0"
+                        style="max-width: 35rem;color: #1F2937; font-weight: 300;   font-family: 'Poppins', sans-serif;">
+                        <span style="font-weight: 800;">{{#if wuser}}{{wuser.name}}{{else}}Worker{{/if}}</span>
+                        , if you want to receive work from customers, you must be online otherwise, you won't get
+                        any work.
                     </p>
-                    <label for="" style="font-size: 38px;background-color: black;border-radius: 20px;"
-                        class="p-3 text-light"><b>Select If Your Ready
-                            For Work Or Not</b>
-                    </label> <br>
+                </div>
 
-                    <label><input type="radio" name="status" value="true"> I Am Available</label><br>
-                    <label><input type="radio" name="status" value="false"> I Am Not Available </label><br>
-                    <input type="submit" value="submit" class="btn btn-dark" style="width: 50%;font-weight: 800;">
-                </form>
+                <a href="/workers/confirm" id="startbtn" class="btn  rounded-pill px-4 py-2 mt-2"
+                    style="color: black; border-radius: 12px;  font-family: 'Poppins', sans-serif; margin-bottom: 13px;">Get
+                    Started <img src="/design/arrow_icon.svg" alt=""></a>
             </div>
         </div>
     </div>
 
 </div>
-<div class="container-fluid">
-
-    <div class="row">
-        <div class="col-md-12" style="background-color: black;">
-            <link rel="stylesheet" href="/stylesheets/footer.css">
-            <footer style="width: 100%;" id="wfooter">
-                <div class="footer text-ceneter" style="width: 100%; pl-5">
-                    <div class=" p-5">
-                        <a href="#" class="m-5"><i class="fa fa-facebook" style="font-size: 30px;"></i></a>
-                        <a href="#" class="m-5"><i class="fa fa-instagram" style="font-size: 30px;"></i></a>
-                        <a href="#" class="m-5"><i class="fa fa-youtube" style="font-size: 30px;"></i></a>
-                        <a href="#" class="m-5"><i class="fa fa-twitter" style="font-size: 30px;"></i></a>
-                    </div>
-
-                    <div class="row">
-                        <ul>
-                            <li><a href="#">Contact us</a></li>
-                            <li><a href="/service">Our Services</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Terms & Conditions</a></li>
-                        </ul>
-                    </div>
-
-                    <div class=" text-center">
-                        <p class="pl-5 text-light">CONSTRUCTIVEEDGE Copyright © 2023 ConstructiveEdge - All rights
-                            reserved ||
-                            Designed
-                            By:
-                            Vishnu Ravi</p>
-                    </div>
-                </div>
-            </footer>
-        </div>
-    </div>
-</div>
-
 <style>
-    #worker {
-        background-image: url(/images/pexels-aleksandar-pasaric-356286.jpg);
-        background-attachment: fixed;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        height: auto;
-        display: flex;
+    .moving-arrow {
+        font-size: 35px;
+        margin: 0;
+        display: inline-block;
+        position: relative;
+        color: #ccc;
+
+        animation: shakeArrow 0.5s infinite alternate ease-in-out;
     }
 
-    #status {
-        box-shadow: rgba(157, 155, 155, 0.25) 0px 54px 55px, rgba(184, 182, 182, 0.12) 0px -12px 30px, rgba(219, 218, 218, 0.12) 0px 4px 6px, rgba(226, 225, 225, 0.17) 0px 12px 13px, rgba(255, 255, 255, 0.09) 0px -3px 5px;
+    @media screen and (max-width: 768px) {
+
+        #imganddiv {
+            flex-direction: column;
+            justify-content: center;
+        }
+
+
+    }
+
+    #startbtn {
+        border: solid .5px;
+    }
+
+    #startbtn:hover {
+        background-color: rgb(204, 204, 204);
+    }
+
+    #one {
+        min-height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-image: url(/design/bg_img.png);
+    }
+
+    #one::-webkit-scrollbar {
+        display: none;
+    }
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        top: 3px;
+        width: 60px;
+        height: 24px;
+
+
+        /* Set height to 24px */
+    }
+
+    /* Hide default checkbox */
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    /* The slider */
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        border-radius: 24px;
+        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+        /* Ensures full round shape */
+        transition: .4s;
+    }
+
+    /* The slider knob (circle) */
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        /* Adjusted knob size */
+        width: 18px;
+        left: 3px;
+        /* Adjusted for proper spacing */
+        bottom: 3px;
+        background-color: white;
+        border-radius: 50%;
+        transition: .4s;
+    }
+
+    /* When the toggle is ON */
+    input:checked+.slider {
+        background: linear-gradient(90deg, #acfc80, #efffe2);
+    }
+
+    /* Small focus effect */
+    input:focus+.slider {
+        box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+    }
+
+    /* Move the knob fully to the right */
+    input:checked+.slider:before {
+        transform: translateX(34px);
+        /* Adjusted for full movement */
+    }
+
+
+    @keyframes shakeArrow {
+        0% {
+            transform: translateX(5px);
+            /* Slight move to right */
+        }
+
+        100% {
+            transform: translateX(-5px);
+            /* Slight move to left */
+        }
+    }
+
+    @keyframes zoomIn {
+        from {
+            transform: scale(0.8);
+            opacity: 0;
+        }
+
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
     }
 </style>
+
+<script>
+    function toggleChange(boolean) {
+        let form = document.getElementById("statusForm");
+
+        // Get the toggle switch state
+        let isChecked = document.querySelector(".switch input").checked;
+        if (isChecked) {
+            let availableRadio = document.querySelector("input[name='status'][value='true']");
+            availableRadio.checked = isChecked;
+        }
+        else {
+            let notAvailableRadio = document.querySelector("input[name='status'][value='false']");
+            notAvailableRadio.checked = !isChecked;
+        }
+        form.submit();
+    }
+
+</script>

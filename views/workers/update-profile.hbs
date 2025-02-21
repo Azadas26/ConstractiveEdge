@@ -1,49 +1,98 @@
-<div id="signup" class="container-fluid">
-    <div class="row  p-5">
-        <div class="col-md-12 mt-5 pt-5">
-            <form action="/workers/update" method="post" enctype="multipart/form-data">
-                <h1 class="text-center" style="font-weight: 800; color: rgb(38, 38, 37);"><b>Update Your Profile</b>
-                </h1>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Enter Work Description :</label>
-                    <input name="description" style="height: 100px;" type="text" class="form-control"
-                        id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Description">
-
-                </div>
-                <div class="form-group">
-                    <label class="" for="exampleInputEmail1">Working Place Address :</label>
-                    <input name="address" type="text" style="height: 100px;" class="form-control"
-                        id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Address">
-
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Working Place Pincode :</label>
-                    <input name="pincode" type="number" class="form-control" id="exampleInputEmail1"
-                        aria-describedby="emailHelp" placeholder="6905XXXX">
-
-                </div>
-                <div class="form-group">
-                    <label class="" for="exampleInputPassword1">Upload Your Work Photos :</label>
-                    <input name="image1" type="file" class="form-control" id="exampleInputPassword1"> <br>
-                    <input name="image2" type="file" class="form-control" id="exampleInputPassword1"> <br>
-                    <input name="image3" type="file" class="form-control" id="exampleInputPassword1"> <br>
-                </div>
-                <button type="submit" style="width: 100%; border-radius: 12px;" class="btn btn-dark">Submit</button>
-            </form>
+<div id="signup" class="container-fluid p-3">
+    <form id="updateForm" class="p-5 hidden-form" action="/workers/update" method="post" enctype="multipart/form-data">
+        <h1 class="text-center" style="font-weight: 800; color: rgb(38, 38, 37);"><b>Update your profile</b></h1>
+        <div class="mt-4" style="display: flex; align-items: center; justify-content: space-evenly; gap: 35px;">
+            <div class="form-group">
+                <label>Enter Work Description :</label>
+                <input name="description" style="height: 50px;" type="text" class="form-control" placeholder="Description">
+            </div>
+            <div class="form-group">
+                <label>Working Place Address :</label>
+                <input name="address" type="text" style="height: 50px;" class="form-control" placeholder="Address">
+            </div>
         </div>
-    </div>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 35px;">
+            <div class="form-group" style="width: 50%;">
+                <label>Working Place Pincode :</label>
+                <input name="pincode" type="number" class="form-control" placeholder="6905XXXX">
+            </div>
+            <div class="form-group" style="width: 50%;">
+                <label class="mt-1">Upload Your Work Photos:</label>
+                <div class="proimg m-0 p-0">
+                    <input name="image1" type="file" class="form-control"> <br>
+                    <input name="image2" type="file" class="form-control"> <br>
+                    <input name="image3" type="file" class="form-control"> <br>
+                </div>
+            </div>
+        </div>
+        <button type="submit" style="width: 100%; border-radius: 12px; background: linear-gradient(90deg, #007BFF, #00A8FF);" class="btn text-light">Submit</button>
+    </form>
 </div>
 
 <style>
+    /* Paper roll effect */
+    .hidden-form {
+        opacity: 0;
+        transform-origin: top center;
+        transform: scaleY(0);
+    }
+
+    .form-visible {
+        opacity: 1;
+        transform: scaleY(1);
+        transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.2s ease-out;
+    }
+
+    input {
+        max-width: 300px;
+        margin: 0;
+    }
+
+    label {
+        margin: 0;
+    }
+
+    .proimg {
+        height: 60px;
+        overflow-x: hidden;
+        padding: 10px;
+    }
+
+    .proimg::-webkit-scrollbar {
+        display: none;
+    }
+
     #signup {
-        background-image: url();
+        background-image: url(/design/bg_img.png);
         background-attachment: fixed;
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
-        height: 100vh;
+        min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
     }
+
+    form {
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+        border-radius: 12px;
+        margin-top: 40px;
+        background: #fff;
+        padding: 20px;
+    }
+
+    @media screen and (max-width: 768px) {
+        form {
+            margin-top: 80px;
+        }
+    }
 </style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(() => {
+            document.getElementById("updateForm").classList.add("form-visible");
+        }, 200);
+    });
+</script>

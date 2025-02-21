@@ -103,13 +103,7 @@ module.exports =
     },
     Change_acc_By_Worker: (userid, wrkid) => {
         return new promise(async (resolve, reject) => {
-            await db.get().collection(consts.request_base).updateOne({ userId: objectId(userid), workersId: objectId(wrkid) },
-                {
-                    $set:
-                    {
-                        acc: true
-                    }
-                }).then((data) => {
+            await db.get().collection(consts.request_base).deleteOne({ userId: objectId(userid), workersId: objectId(wrkid) }).then((data) => {
                     resolve(data)
                 })
         })
@@ -133,7 +127,8 @@ module.exports =
                 {
                     $match:
                     {
-                        workersId: objectId(wkid)
+                        workersId: objectId(wkid),
+                        status:true
                     }
                 },
                 {

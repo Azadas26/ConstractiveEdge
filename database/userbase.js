@@ -206,20 +206,21 @@ module.exports =
     },
     Remove_Type_and_User_WIth_WorkersFroM_Accept: (userid, ttype) => {
         return new promise(async (resolve, reject) => {
-
+            console.log("Deleting records for:", objectId(userid), "with type:", ttype);
             await db.get().collection(consts.accept_base).deleteMany({ userId: objectId(userid), type: ttype }).then((data) => {
                 resolve(data)
                 console.log(data);
             })
         })
     },
-    Get_User_Current_Activites: (userid) => {
+        Get_User_Current_Activites: (userid) => {
         return new promise(async (resolve, reject) => {
             var list = await db.get().collection(consts.userandwkr).aggregate([
                 {
                     $match:
                     {
-                        userId: objectId(userid)
+                        userId: objectId(userid),
+                        status:true
                     }
                 },
                 {
@@ -386,18 +387,17 @@ module.exports =
     Update_Worker_Rating: (wkid, rate) => {
         return new promise(async (resolve, reject) => {
             console.log(rate);
-            if(rate == 1)
-            {
+            if (rate == 1) {
                 await db.get().collection(consts.workers_base).updateOne({ wkid: objectId(wkid) },
                     {
                         $set:
                         {
                             rating: parseInt(rate),
-                            one:true,
-                            two:false,
-                            three:false,
-                            four:false,
-                            five:false
+                            one: true,
+                            two: false,
+                            three: false,
+                            four: false,
+                            five: false
                         }
                     }).then((data) => {
                         resolve(data)
@@ -467,24 +467,65 @@ module.exports =
                         resolve(data)
                     })
             }
-            
+
         })
     },
-    ChecK_the_Email_aleady_exist_Or_NOt : (mail)=>
-    {
-        return new promise(async(resolve,reject)=>
-        {
-            await db.get().collection(consts.userbase).findOne({email:mail}).then((email)=>
-            {
-                if(email)
-                {
+    ChecK_the_Email_aleady_exist_Or_NOt: (mail) => {
+        return new promise(async (resolve, reject) => {
+            await db.get().collection(consts.userbase).findOne({ email: mail }).then((email) => {
+                if (email) {
                     resolve(false)
                 }
-                else
-                {
+                else {
                     resolve(true)
                 }
             })
+        })
+    },
+    Get_Work_type_forSearch: () => {
+        return new promise(async (resolve, reject) => {
+            const workers = await db.get().collection(consts.workers_base).find().toArray();
+            const wrktype = [... new Set(workers.map((wrk) => wrk.wrktype))]
+
+            resolve({ wrktype, workers })
+
+        })
+    },
+    Get_User_Current_Activiteshistory: (userid) => {
+        return new promise(async (resolve, reject) => {
+            var list = await db.get().collection(consts.userandwkr).aggregate([
+                {
+                    $match:
+                    {
+                        userId: objectId(userid),
+                        status:false
+                    }
+                },
+                {
+                    $lookup:
+                    {
+                        from: consts.workers_base,
+                        localField: "workersId",
+                        foreignField: "wkid",
+                        as: "workers"
+                    }
+                },
+                {
+                    $project:
+                    {
+                        userId: 1,
+                        status: 1,
+                        endstatus: 1,
+                        starting: 1,
+                        ending: 1,
+                        workers:
+                        {
+                            $arrayElemAt: ['$workers', 0]
+                        }
+                    }
+                }
+            ]).toArray()
+            resolve(list);
         })
     }
 }
