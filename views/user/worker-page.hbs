@@ -290,8 +290,8 @@
 
         cardone.style.display = "none";
         cardtwo.style.display = "flex"
-        cardtwo.style.flexWrap="wrap"
-       
+        cardtwo.style.flexWrap = "wrap"
+
     }
 
     function flip2() {
@@ -311,6 +311,10 @@
     #rootcont {
         min-height: 100vh;
         background-image: url(/design/bg_img.png);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -350,7 +354,7 @@
     }
 
     .workerupdate {
-        
+
         height: 600px;
         width: 50%;
         display: flex;
@@ -550,15 +554,15 @@
             animation: flipIn 1.3s ease-in-out forwards;
         }
 
-         .workerupdate {
-        
-        height: 600px;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        overflow-y: scroll;
-    }
+        .workerupdate {
+
+            height: 600px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            overflow-y: scroll;
+        }
 
 
 

@@ -27,7 +27,8 @@
                 <button class="ex">gd</button>
                 <button class="ex">time</button>
                 <button class="ex">price</button>
-                <button class="ex rating-btn">+&nbsp;{{#if this.workers.rating}}{{this.workers.rating}}{{else}}5{{/if}}</button>
+                <button class="ex rating-btn">+&nbsp;{{#if
+                    this.workers.rating}}{{this.workers.rating}}{{else}}5{{/if}}</button>
             </div>
             <p class="worker-description">{{this.workers.description}}</p>
             <div class="status-btn">
@@ -51,6 +52,10 @@
     .rootreq {
         width: 100%;
         background-image: url(/design/bg_img.png);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
         min-height: 100vh;
         display: flex;
         flex-direction: column;
